@@ -1,10 +1,3 @@
-#!/usr/bin/python
-
-#mobileArray=[]
-#nameArray=[]
-#emailArray=[]
-  
-# Simple routine to run a query on a database and print the results:
 #def doQuery( conn ) :
 #	cur = conn.cursor()  
 #	cur.execute( "SELECT mobileNo, name, email from users where sentMail=;" )
@@ -17,6 +10,10 @@
 
 from SqlConnections import connection  
 import MySQLdb
+
+####################
+# INSERT FUNCTIONS #
+####################
 
 # Function which inserts given details into USERS table.
 def users_insert( name, admin, username, password ):
@@ -41,7 +38,7 @@ def contacts_insert( name, company, mobile, email, address ):
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " INSERT INTO USERS VALUES ( USERID, '{NAME}', '{COMPANY}', '{MOBILE}', '{EMAIL}', '{ADDRESS}', STATUS   ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address )
+	sql_query = " INSERT INTO CONTACTS VALUES ( USERID, '{NAME}', '{COMPANY}', '{MOBILE}', '{EMAIL}', '{ADDRESS}', STATUS ); ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address )
 
 	try:
 		cursor.execute(sql_query)
@@ -51,6 +48,21 @@ def contacts_insert( name, company, mobile, email, address ):
 
 	conn.close()
 
+####################
+# UPDATE FUNCTIONS #
+####################
+
+def update_contacts( userid, name, company, mobile, email, address ):
+
+	conn = connection()
+	cursor = conn.cursor()
+
+	sql_query = " UPDATE CONTACTS SET NAME='{NAME}', COMPANY='{COMPANY}', MOBILE='{MOBILE}', EMAIL='{EMAIL}', ADDRESS='{ADDRESS}' WHERE USERID={USERID}; ".format( 
+
+
+###################
+# LOGIN FUNCTIONS #
+###################
 
 # Function which validates a username/password login.
 def login(username, password):
