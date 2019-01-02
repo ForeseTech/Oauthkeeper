@@ -52,12 +52,39 @@ def contacts_insert( name, company, mobile, email, address ):
 # UPDATE FUNCTIONS #
 ####################
 
+
+# Function which updates data in the CONTACTS table.
 def update_contacts( userid, name, company, mobile, email, address ):
 
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " UPDATE CONTACTS SET NAME='{NAME}', COMPANY='{COMPANY}', MOBILE='{MOBILE}', EMAIL='{EMAIL}', ADDRESS='{ADDRESS}' WHERE USERID={USERID}; ".format( 
+	sql_query = " UPDATE CONTACTS SET NAME='{NAME}', COMPANY='{COMPANY}', MOBILE='{MOBILE}', EMAIL='{EMAIL}', ADDRESS='{ADDRESS}' WHERE USERID={USERID}; ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address, USERID=userid )
+	
+	try:
+		cursor.execute(sql_query)
+		conn.commit()
+	except:
+		conn.rollback()
+
+	conn.close()
+
+
+# Function which updates data in the USERS table.
+def update_users( userid, name, admin, username, password ):
+
+	conn = connection()
+	cursor = conn.cursor()
+
+	sql_query = " UPDATE USERS SET NAME='{NAME}', ADMIN={ADMIN}, USERNAME='{USERNAME}', PASSWORD='{PASSWORD}' WHERE USERID={USERID};  ".format( NAME=name, ADMIN=admin, USERNAME=username, PASSWORD=password, USERID=userid )
+
+	try:
+		cursor.execute(sql_query)
+		conn.commit()
+	except:
+		conn.rollback()
+	
+	conn.close()
 
 
 ###################
