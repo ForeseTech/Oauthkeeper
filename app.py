@@ -3,6 +3,7 @@ sys.path.insert(0, '/root/Oauthkeeper/src')
 
 from flask import Flask, render_template, request, flash
 from SqlDataFunctions import login
+from Validation import number_exists, email_exists, is_empty, validate_number, validate_email
 
 app = Flask(__name__)
 
@@ -50,20 +51,20 @@ def ContactsAdd():
 		address = request.form['address']
 
 		if is_empty(name):
-			return "Invalid"
+			return "name is empty"
 		elif is_empty(company):
-			return "Invalid"
+			return "company is empty"
 		elif validate_number(number):
-			return "Invalid"
+			return "number is empty"
 		elif validate_email(email):
-			return "Invalid"
+			return "email is empty"
 		elif is_empty(address):
-			return "Invalid"
+			return "address is empty"
 		else:
 			if number_exists(number):
-				return "Invalid"
+				return "number already exists"
 			elif email_exists(number):
-				return "Invalid"
+				return "email already exists"
 
-		contacts_insert( name, company, number, email, address ):
+		contacts_insert( name, company, number, email, address )
 		return redirect( url_for('UserLogin') )
