@@ -37,7 +37,6 @@ def validate_email( email ):
 # EXISTS FUNCTION #
 ###################
 
-
 # Function which checks if a number already exists in the db.
 def number_exists( number ):
 	conn = connection()
@@ -77,3 +76,14 @@ def email_exists( email ):
 			return True
 	
 	return False
+
+###################
+# EMPTY FUNCTIONS #
+###################
+
+# Function which checks whether a value is empty or not.
+def is_empty( word ):
+	if word:
+		return True
+	else:
+		return False
