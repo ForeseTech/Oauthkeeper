@@ -61,7 +61,7 @@ def number_exists( number ):
 # Function which checks if an email already exists in the db.
 def email_exists( email ):
 	conn = connection()
-	cursor = con.cursor()
+	cursor = conn.cursor()
 
 	sql_query = " SELECT EMAIL FROM CONTACTS WHERE EMAIL='{EMAIL}'; ".format( EMAIL=email )
 
