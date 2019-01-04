@@ -12,5 +12,3 @@ def escape_special_characters( string ):
 			escapedString += character
 	
 	return escapedString
-
-print("\'")
