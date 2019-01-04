@@ -2,3 +2,4 @@ forese
 
 *.pyc
 SqlConnections.py
+InsertUsers.py
