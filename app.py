@@ -49,7 +49,7 @@ def validate_admin_login():
 ###############
 
 @app.route('/add')
-def AddContact():
+def add_contact():
 
 	if 'username' not in session:
 		return redirect( url_for('get_login') )
