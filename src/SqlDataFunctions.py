@@ -109,12 +109,12 @@ def login(username, password):
 #################
 
 # Function which gets contacts data which have been permitted to be viewed by a given user.
-def GetContacts(username):
+def get_contacts(username):
 
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " SELECT NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS FROM CONTACTS WHERE PERMISSIONS LIKE \"%{USER}%\";  ".format(USER=username)
+	sql_query = " SELECT USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS FROM CONTACTS WHERE PERMISSIONS LIKE \"%{USER}%\";  ".format(USER=username)
 
 	try:
 		cursor.execute(sql_query)
@@ -123,17 +123,21 @@ def GetContacts(username):
 		conn.close()
 		print(e)
 	
+	ids = []
 	names = []
 	companies = []
 	mobiles = []
 	emails = []
 	addresses = []
+	statuses = []
 
-	for NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS in cursor.fetchall():
+	for USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS in cursor.fetchall():
+		ids.append(USERID)
 		names.append(NAME)
 		companies.append(COMPANY)
 		mobiles.append(MOBILE)
 		emails.append(EMAIL)
 		addresses.append(ADDRESS)
+		statuses.append(STATUS)
 	
-	return zip(names, companies, mobiles, emails, addresses)
+	return zip(ids, names, companies, mobiles, emails, addresses, statuses)

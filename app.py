@@ -2,7 +2,7 @@ import sys
 sys.path.insert(0, '/root/Oauthkeeper/src')
 
 from flask import Flask, render_template, request, flash, redirect, url_for
-from SqlDataFunctions import login, contacts_insert
+from SqlDataFunctions import login, contacts_insert, get_contacts
 from Validation import number_exists, email_exists, is_empty, validate_number, validate_email
 from Formatting import escape_special_characters
 
@@ -69,3 +69,8 @@ def ContactsAdd():
 			else:
 				contacts_insert( name, company, number, email, address )
 				return redirect( url_for('GetLogin') )
+
+@app.route('/user/<username>')
+def UserContacts(username):
+	contactRecords = get_contacts(username)
+	return render_template('user-contacts.html', records = contactRecords)
