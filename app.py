@@ -4,31 +4,37 @@ sys.path.insert(0, '/root/Oauthkeeper/src')
 import SqlDataFunctions as sql
 import Formatting as form
 from Validation import number_exists, email_exists, is_empty, validate_number, validate_email
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, session
 
 app = Flask(__name__)
+app.secret_key = "8d%/?234s*&19aw}ws{"
+
+##################
+# LOGIN & LOGOUT #
+##################
 
 @app.route('/')
-def GetLogin():
+def get_login():
 	return render_template('user-login.html')
 
 @app.route('/admin')
-def GetAdminLogin():
+def get_admin_login():
 	return render_template('admin-login.html')
 
 @app.route('/user-login', methods = ['POST'])
-def ValidateUserLogin():
+def validate_user_login():
 	if request.method == 'POST':
 		username = request.form['username']
 		password = request.form['password']
 
 		if sql.login(username, password) == True:
-			return "it is valid"
+			session['username'] = username
+			return redirect( url_for('user_contacts', username=session['username']) )
 		else:
-			return "it is invalid"
+			return redirect( url_for('get_login') )
 
 @app.route('/admin-login', methods = ['POST'])
-def ValidateAdminLogin():
+def validate_admin_login():
 	if request.method == 'POST':
 		username = request.form['username']
 		password = request.form['password']
@@ -37,9 +43,17 @@ def ValidateAdminLogin():
 			return "it is valid"
 		else:
 			return "it is invalid"
+
+###############
+# ADD CONTACT #
+###############
 
 @app.route('/add')
 def AddContact():
+
+	if 'username' not in session:
+		return redirect( url_for('get_login') )
+
 	return render_template('user-add.html')
 
 @app.route('/add-contact', methods = ['POST'])
@@ -68,15 +82,33 @@ def ContactsAdd():
 				return "email already exists"
 			else:
 				sql.contacts_insert( name, company, number, email, address )
-				return redirect( url_for('GetLogin') )
+				return redirect( url_for('get_login') )
+
+
+####################
+# DISPLAY CONTACTS #
+####################
 
 @app.route('/<username>')
-def UserContacts(username):
+def user_contacts(username):
+
+	if 'username' in session:
+		if session['username'] != username:
+			return redirect( url_for('get_login') )
+	else:
+		return redirect( url_for('get_login') )
+
 	contactRecords = sql.get_contacts(username)
 	return render_template('user-contacts.html', records = contactRecords)
 
+
+###################
+# UPDATE CONTACTS #
+###################
+
+
 @app.route('/update-contacts/<int:userid>', methods = ['POST'])
-def UpdateContacts(userid):
+def update_contact(userid):
 	if request.method == 'POST':
 		name = form.escape_special_characters(request.form['name'])
 		company = form.escape_special_characters(request.form['company'])
@@ -105,4 +137,4 @@ def UpdateContacts(userid):
 					return "email already exists"
 
 			sql.update_contacts( userid, name, company, number, email, address, status )
-			return redirect( url_for('GetLogin') )
+			return redirect( url_for('get_login') )
