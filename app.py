@@ -70,7 +70,7 @@ def ContactsAdd():
 				contacts_insert( name, company, number, email, address )
 				return redirect( url_for('GetLogin') )
 
-@app.route('/user/<username>')
+@app.route('/<username>')
 def UserContacts(username):
 	contactRecords = get_contacts(username)
 	return render_template('user-contacts.html', records = contactRecords)
