@@ -23,12 +23,12 @@ def users_insert( name, admin, username, password ):
 
 
 # Function which inserts given details into CONTACTS table.
-def contacts_insert( name, company, mobile, email, address ):
+def contacts_insert( name, company, mobile, email, address, current_user ):
 
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " INSERT INTO CONTACTS VALUES ( USERID, \"{NAME}\", \"{COMPANY}\", \"{MOBILE}\", \"{EMAIL}\", \"{ADDRESS}\", STATUS, \"\" ); ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address )
+	sql_query = " INSERT INTO CONTACTS VALUES ( USERID, \"{NAME}\", \"{COMPANY}\", \"{MOBILE}\", \"{EMAIL}\", \"{ADDRESS}\", STATUS, \"{CURRENTUSER}\" ); ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address, CURRENTUSER=current_user )
 
 	try:
 		cursor.execute(sql_query)

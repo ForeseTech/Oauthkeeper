@@ -81,8 +81,8 @@ def ContactsAdd():
 			elif email_exists(email):
 				return "email already exists"
 			else:
-				sql.contacts_insert( name, company, number, email, address )
-				return redirect( url_for('get_login') )
+				sql.contacts_insert( name, company, number, email, address, session['username'] )
+				return redirect( url_for('user_contacts', username=session['username']) )
 
 
 ####################
