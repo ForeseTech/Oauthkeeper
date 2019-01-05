@@ -102,3 +102,44 @@ def login(username, password):
 			return True
 
 	return False
+
+
+#################
+# GET FUNCTIONS #
+#################
+
+# Function which gets contacts data which have been permitted to be viewed by a given user.
+def GetContacts(username):
+
+	conn = connection()
+	cursor = conN.cursor()
+
+	sql_query = " SELECT NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS FROM CONTACTS WHERE CONTAINS(PERMISSIONS, {USER}); ".format(USER=username)
+
+	try:
+		cursor.execute(sql_query)
+		conn.close()
+	except:
+		conn.close()
+	
+	name = []
+	company = []
+	mobile = []
+	email = []
+	address = []
+
+	for NAME, COMPANY, MOBILE, EMAIL, ADDRESS in cursor.fetchall():
+		name.append(NAME)
+		company.append(COMPANY)
+		mobile.append(MOBILE)
+		email.append(EMAIL)
+		address.append(ADDRESS)
+	
+	userDetails = []
+	userDetails.append(name)
+	userDetails.append(company)
+	userDetails.append(mobile)
+	userDetails.append(email)
+	userDetails.append(address)
+
+	return userDetails
