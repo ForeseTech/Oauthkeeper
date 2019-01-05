@@ -112,34 +112,28 @@ def login(username, password):
 def GetContacts(username):
 
 	conn = connection()
-	cursor = conN.cursor()
+	cursor = conn.cursor()
 
-	sql_query = " SELECT NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS FROM CONTACTS WHERE CONTAINS(PERMISSIONS, {USER}); ".format(USER=username)
+	sql_query = " SELECT NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS FROM CONTACTS WHERE PERMISSIONS LIKE \"%{USER}%\";  ".format(USER=username)
 
 	try:
 		cursor.execute(sql_query)
 		conn.close()
-	except:
+	except Exception as e:
 		conn.close()
+		print(e)
 	
-	name = []
-	company = []
-	mobile = []
-	email = []
-	address = []
+	names = []
+	companies = []
+	mobiles = []
+	emails = []
+	addresses = []
 
-	for NAME, COMPANY, MOBILE, EMAIL, ADDRESS in cursor.fetchall():
-		name.append(NAME)
-		company.append(COMPANY)
-		mobile.append(MOBILE)
-		email.append(EMAIL)
-		address.append(ADDRESS)
+	for NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS in cursor.fetchall():
+		names.append(NAME)
+		companies.append(COMPANY)
+		mobiles.append(MOBILE)
+		emails.append(EMAIL)
+		addresses.append(ADDRESS)
 	
-	userDetails = []
-	userDetails.append(name)
-	userDetails.append(company)
-	userDetails.append(mobile)
-	userDetails.append(email)
-	userDetails.append(address)
-
-	return userDetails
+	return zip(names, companies, mobiles, emails, addresses)
