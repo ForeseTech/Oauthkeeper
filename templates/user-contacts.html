@@ -13,17 +13,17 @@
 
 		<form method="post" action="http://142.92.222.92:5000/contacts-update">
 
-			<input type="text" value="{{ contactid }}" class="hidden-input">
-			<input type="text" placeholder="HR's Name" value="{{ name }}">
-			<input type="text" placeholder="HR's Company" value="{{ company }}"><br>
+			<input type="text" value="{{ contactid }}" name="id" class="hidden-input">
+			<input type="text" placeholder="HR's Name" name="name" value="{{ name }}">
+			<input type="text" placeholder="HR's Company" name="company" value="{{ company }}"><br>
 
-			<input type="text" placeholder="{{ contactid  }}" class="hidden-input">
-			<input type="number" placeholder="HR's Number" value="{{ mobile }}">
-			<input type="email" placeholder="HR's Email" value="{{ email }}"><br>
+			<input type="text" placeholder="{{ contactid  }}" name="id2" class="hidden-input">
+			<input type="number" placeholder="HR's Number" name="mobile" value="{{ mobile }}">
+			<input type="email" placeholder="HR's Email" name="email" value="{{ email }}"><br>
 
-			<input type="text" placeholder="{{ contactid }}" class="hidden-input">
-			<textarea type="address" placeholder="HR's Address"> {{ address }}  </textarea><br>
-			<select>
+			<input type="text" placeholder="{{ contactid }}" name="id3" class="hidden-input">
+			<textarea type="address" placeholder="HR's Address" name="address"> {{ address }}  </textarea><br>
+			<select name="status">
 				<option value="{{ status }}" selected>{{ status }}</option>
 				<option value="Wrong Number">Wrong Number</option>
 				<option value="Called/Accepted">Called/Accepted</option>
