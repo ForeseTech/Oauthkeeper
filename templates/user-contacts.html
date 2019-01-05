@@ -9,19 +9,16 @@
 
 		<h1>Your Contacts</h1>
 
-		{% for contactid, name, company, mobile, email, address, status in records %}
+		{% for contactid, name, company, number, email, address, status in records %}
 
-		<form method="post" action="http://142.92.222.92:5000/contacts-update">
+		<form method="post" action="http://142.93.222.92:5000/update-contacts/{{contactid}}">
 
-			<input type="text" value="{{ contactid }}" name="id" class="hidden-input">
 			<input type="text" placeholder="HR's Name" name="name" value="{{ name }}">
 			<input type="text" placeholder="HR's Company" name="company" value="{{ company }}"><br>
 
-			<input type="text" placeholder="{{ contactid  }}" name="id2" class="hidden-input">
-			<input type="number" placeholder="HR's Number" name="mobile" value="{{ mobile }}">
+			<input type="number" placeholder="HR's Number" name="number" value="{{ number }}">
 			<input type="email" placeholder="HR's Email" name="email" value="{{ email }}"><br>
 
-			<input type="text" placeholder="{{ contactid }}" name="id3" class="hidden-input">
 			<textarea type="address" placeholder="HR's Address" name="address"> {{ address }}  </textarea><br>
 			<select name="status">
 				<option value="{{ status }}" selected>{{ status }}</option>

@@ -1,10 +1,10 @@
 import sys
 sys.path.insert(0, '/root/Oauthkeeper/src')
 
-from flask import Flask, render_template, request, flash, redirect, url_for
-from SqlDataFunctions import login, contacts_insert, get_contacts
+import SqlDataFunctions as sql
+import Formatting as form
 from Validation import number_exists, email_exists, is_empty, validate_number, validate_email
-from Formatting import escape_special_characters
+from flask import Flask, render_template, request, flash, redirect, url_for
 
 app = Flask(__name__)
 
@@ -22,7 +22,7 @@ def ValidateUserLogin():
 		username = request.form['username']
 		password = request.form['password']
 
-		if login(username, password) == True:
+		if sql.login(username, password) == True:
 			return "it is valid"
 		else:
 			return "it is invalid"
@@ -33,7 +33,7 @@ def ValidateAdminLogin():
 		username = request.form['username']
 		password = request.form['password']
 
-		if login(username, password) == True:
+		if sql.login(username, password) == True:
 			return "it is valid"
 		else:
 			return "it is invalid"
@@ -45,11 +45,11 @@ def AddContact():
 @app.route('/add-contact', methods = ['POST'])
 def ContactsAdd():
 	if request.method == 'POST':
-		name = escape_special_characters(request.form['name'])
-		company = escape_special_characters(request.form['company'])
-		number = escape_special_characters(request.form['number'])
-		email = escape_special_characters(request.form['email'])
-		address = escape_special_characters(request.form['address'])
+		name = form.escape_special_characters(request.form['name'])
+		company = form.escape_special_characters(request.form['company'])
+		number = form.escape_special_characters(request.form['number'])
+		email = form.escape_special_characters(request.form['email'])
+		address = form.escape_special_characters(request.form['address'])
 
 		if is_empty(name):
 			return "name is empty"
@@ -64,13 +64,45 @@ def ContactsAdd():
 		else:
 			if number_exists(number):
 				return "number already exists"
-			elif email_exists(number):
+			elif email_exists(email):
 				return "email already exists"
 			else:
-				contacts_insert( name, company, number, email, address )
+				sql.contacts_insert( name, company, number, email, address )
 				return redirect( url_for('GetLogin') )
 
 @app.route('/<username>')
 def UserContacts(username):
-	contactRecords = get_contacts(username)
+	contactRecords = sql.get_contacts(username)
 	return render_template('user-contacts.html', records = contactRecords)
+
+@app.route('/update-contacts/<int:userid>', methods = ['POST'])
+def UpdateContacts(userid):
+	if request.method == 'POST':
+		name = form.escape_special_characters(request.form['name'])
+		company = form.escape_special_characters(request.form['company'])
+		number = form.escape_special_characters(request.form['number'])
+		email = form.escape_special_characters(request.form['email'])
+		address = form.escape_special_characters(request.form['address'])
+		status = form.escape_special_characters(request.form['status'])
+
+		if is_empty(name):
+			return "name is empty"
+		elif is_empty(company):
+			return "company is empty"
+		elif validate_number(number) == False:
+			return "number is empty"
+		elif validate_email(email) == False:
+			return "email is empty"
+		elif is_empty(address):
+			return "address is empty"
+		else:
+			if number != sql.get_mobile_number(userid):
+				if number_exists(number):
+					return "number already exists"
+
+			if email != sql.get_email(userid):
+				if email_exists(email):
+					return "email already exists"
+
+			sql.update_contacts( userid, name, company, number, email, address, status )
+			return redirect( url_for('GetLogin') )

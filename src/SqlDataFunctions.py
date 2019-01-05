@@ -46,18 +46,19 @@ def contacts_insert( name, company, mobile, email, address ):
 
 
 # Function which updates data in the CONTACTS table.
-def update_contacts( userid, name, company, mobile, email, address ):
+def update_contacts( userid, name, company, mobile, email, address, status ):
 
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " UPDATE CONTACTS SET NAME=\"{NAME}\", COMPANY=\"{COMPANY}\", MOBILE=\"{MOBILE}\", EMAIL=\"{EMAIL}\", ADDRESS=\"{ADDRESS}\" WHERE USERID={USERID}; ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address, USERID=userid )
+	sql_query = " UPDATE CONTACTS SET NAME=\"{NAME}\", COMPANY=\"{COMPANY}\", MOBILE=\"{MOBILE}\", EMAIL=\"{EMAIL}\", ADDRESS=\"{ADDRESS}\", STATUS=\"{STATUS}\" WHERE USERID={USERID}; ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address, STATUS=status, USERID=userid )
 	
 	try:
 		cursor.execute(sql_query)
 		conn.commit()
-	except:
+	except Exception as e:
 		conn.rollback()
+		print(e)
 
 	conn.close()
 
@@ -141,3 +142,47 @@ def get_contacts(username):
 		statuses.append(STATUS)
 	
 	return zip(ids, names, companies, mobiles, emails, addresses, statuses)
+
+# Function which gets mobile number based on the contactid.
+def get_mobile_number(userid):
+
+	conn = connection()
+	cursor = conn.cursor()
+
+	sql_query = " SELECT MOBILE FROM CONTACTS WHERE USERID={ID}; ".format(ID=userid)
+
+	try:
+		cursor.execute(sql_query)
+		conn.close()
+
+	except Exception as e:
+		conn.close()
+		print(e)
+	
+	for MOBILE in cursor.fetchall():
+		return MOBILE[0]
+	
+	#If nothing is gotten from the DB
+	return 0
+
+# Function which gets email based on the contactid.
+def get_email(userid):
+
+	conn = connection()
+	cursor = conn.cursor()
+
+	sql_query = " SELECT EMAIL FROM CONTACTS WHERE USERID={ID}; ".format(ID=userid)
+
+	try:
+		cursor.execute(sql_query)
+		conn.close()
+
+	except Exception as e:
+		conn.close()
+		print(e)
+	
+	for EMAIL in cursor.fetchall():
+		return EMAIL[0]
+	
+	#If nothing is gotten from the DB
+	return ""
