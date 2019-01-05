@@ -57,7 +57,7 @@ def add_contact():
 	return render_template('user-add.html')
 
 @app.route('/add-contact', methods = ['POST'])
-def ContactsAdd():
+def contact_add():
 	if request.method == 'POST':
 		name = form.escape_special_characters(request.form['name'])
 		company = form.escape_special_characters(request.form['company'])
@@ -137,4 +137,4 @@ def update_contact(userid):
 					return "email already exists"
 
 			sql.update_contacts( userid, name, company, number, email, address, status )
-			return redirect( url_for('get_login') )
+			return redirect( url_for('user_contacts', username=session['username']) )

@@ -13,7 +13,7 @@
 
 		{% for contactid, name, company, number, email, address, status in records %}
 
-		<form method="post" action="http://142.93.222.92:5000/update-contacts/{{contactid}}">
+		<form method="post" action="{{ url_for('update_contact', userid=contactid) }}">
 
 			<input type="text" placeholder="HR's Name" name="name" value="{{ name }}">
 			<input type="text" placeholder="HR's Company" name="company" value="{{ company }}"><br>
