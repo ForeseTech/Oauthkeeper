@@ -1,0 +1,64 @@
+body, html {
+	margin: 0;
+	padding: 0;
+	font-family: "Verdana", sans-serif;
+}
+
+h1 {
+	text-align: center;
+}
+
+#hr-div {
+	display: block;
+	width: 71%;
+
+	margin: 0 auto;
+	padding: 0;
+
+	border-right: 2px solid black;
+	border-left: 2px solid black;
+	border-bottom: 2px solid black;
+}
+
+form {
+	display: block;
+	width: 100%;
+
+	margin: 0;
+	padding: 0% 0%;
+
+	border-top: 2px solid black;
+}
+
+p {
+	display: inline-block;
+	width: 22%;
+
+	margin: 0;
+	padding: 1%;
+
+	border-right: 1px solid black;
+	text-align: center;
+}
+
+input {
+	display: inline-block;
+	width: 22%;
+
+	margin: 0% 0% 0% 4%;
+	padding-left: 1%;
+
+	color: blue;
+	font-size: 105%;
+}
+
+button {
+	display: inline-block;
+	width: 17%;
+
+	margin: 0% 2%;
+	padding: .7%;
+	vertical-align: middle;
+
+	cursor: pointer;
+}
