@@ -9,12 +9,12 @@
 
 		<h1>Add A Contact!</h1>
 
-		<form method="post" action="http://142.93.222.92:5000/add-contact">
+		<form method="post" action="{{ url_for('contact_add') }}">
 			<input type="text" name="name" placeholder="HR's Name">
-			<input type="text" name="company" placeholder="HR's Company"> 
+			<input type="text" name="company" placeholder="HR's Company"><br>
 			<input type="number" name="number" placeholder="HR's Number">
-			<input type="email" name="email" placeholder="HR's Email">
-			<textarea name="address">HR's Address (Optional)</textarea> <br>
+			<input type="email" name="email" placeholder="HR's Email"><br>
+			<textarea name="address">HR's Address (Optional)</textarea><br>
 			<button type="submit">Add</button>
 		</form>
 
