@@ -14,7 +14,7 @@
 		<h1>Welcome, admins!</h1>
 
 		<!-- The FORM elements.  -->
-		<form method="post" action="http://142.93.222.93:5000/admin-login">
+		<form method="post" action="{{ url_for('validate_admin_login') }}">
 			<input type="text" name="username" placeholder="Username">
 			<input type="password" name="password" placeholder="Password">
 			<button type="submit">Login</button>

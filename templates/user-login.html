@@ -14,7 +14,7 @@
 		<h1>Welcome!</h1>
 
 		<!-- The FORM elements.  -->
-		<form method="post" action="http://142.93.222.92:5000/user-login">
+		<form method="post" action="{{ url_for('validate_user_login') }}">
 			<input type="text" name="username" placeholder="Username">
 			<input type="password" name="password" placeholder="Password">
 			<button type="submit">Login</button>
