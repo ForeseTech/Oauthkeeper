@@ -13,14 +13,31 @@ app.secret_key = "8d%/?234s*&19aw}ws{"
 # LOGIN & LOGOUT #
 ##################
 
+# Function which serves the login page.
 @app.route('/')
 def get_login():
-	return render_template('user-login.html')
 
+	if 'error_message' in session:
+		error_message = session['error_message']
+		session.pop('error_message')
+		return render_template( 'user-login.html', error=error_message )
+	
+	else:
+		return render_template( 'user-login.html', error=None)
+
+# Function which serves the admin-login page.
 @app.route('/admin')
 def get_admin_login():
-	return render_template('admin-login.html')
 
+	if 'error_message' in session:
+		error_message = session['error_message']
+		session.pop('error_message')
+		return render_template( 'admin-login.html', error=error_message )
+	
+	else:
+		return render_template('admin-login.html')
+
+# Function which validates the user-login and sends errors if invalid.
 @app.route('/user-login', methods = ['POST'])
 def validate_user_login():
 	if request.method == 'POST':
@@ -31,8 +48,10 @@ def validate_user_login():
 			session['username'] = username
 			return redirect( url_for('user_contacts', username=session['username']) )
 		else:
+			session['error_message'] = "The username and passwords do not match!"
 			return redirect( url_for('get_login') )
 
+# Function which validates the admin-login and sends error if invalid.
 @app.route('/admin-login', methods = ['POST'])
 def validate_admin_login():
 	if request.method == 'POST':
@@ -43,6 +62,7 @@ def validate_admin_login():
 			session['username'] = username
 			return redirect( url_for('admin_home') )
 		else:
+			session['error_message'] = "The username and the password do not match!"
 			return redirect( url_for('get_admin_login') )
 
 ###############
