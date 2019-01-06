@@ -48,7 +48,7 @@ def validate_user_login():
 			session['username'] = username
 			return redirect( url_for('user_contacts', username=session['username']) )
 		else:
-			session['error_message'] = "The username and passwords do not match!"
+			session['error_message'] = "Invalid credentials! You shall not pass!"
 			return redirect( url_for('get_login') )
 
 # Function which validates the admin-login and sends error if invalid.
@@ -62,7 +62,7 @@ def validate_admin_login():
 			session['username'] = username
 			return redirect( url_for('admin_home') )
 		else:
-			session['error_message'] = "The username and the password do not match!"
+			session['error_message'] = "Invalid credentials! You shall not pass!"
 			return redirect( url_for('get_admin_login') )
 
 ###############
@@ -74,6 +74,11 @@ def add_contact():
 
 	if 'username' not in session:
 		return redirect( url_for('get_login') )
+	
+	if 'error_message' in session:
+		error_message = session['error_message']
+		session.pop('error_message')
+		return render_template( 'user-add.html', error=error_message )
 
 	return render_template('user-add.html')
 
@@ -87,23 +92,23 @@ def contact_add():
 		address = form.escape_special_characters(request.form['address'])
 
 		if is_empty(name):
-			return "name is empty"
+			session['error_message'] = "The 'name' field is required."
 		elif is_empty(company):
-			return "company is empty"
+			session['error_message'] = "The 'company' field is required."
 		elif validate_number(number) == False:
-			return "number is empty"
+			session['error_message'] = "The mobile number is not valid."
 		elif validate_email(email) == False:
-			return "email is empty"
-		elif is_empty(address):
-			return "address is empty"
+			session['error_message'] = "The email address is not valid."
 		else:
 			if number_exists(number):
-				return "number already exists"
+				session['error_message'] = "The mobile number exists in the database."
 			elif email_exists(email):
-				return "email already exists"
+				session['error_message'] = "The email address exists in the database."
 			else:
 				sql.contacts_insert( name, company, number, email, address, session['username'] )
 				return redirect( url_for('user_contacts', username=session['username']) )
+
+		return redirect( url_for('add_contact') )
 
 
 ####################
@@ -114,14 +119,24 @@ def contact_add():
 def user_contacts(username):
 
 	if 'username' in session:
+
 		if session['username'] != username:
 			return redirect( url_for('get_login') )
-	else:
-		return redirect( url_for('get_login') )
 
-	contactRecords = sql.get_contacts(username)
-	return render_template('user-contacts.html', records = contactRecords)
+		elif 'error_message' in session:
+			error_message = session['error_message']
+			session.pop('error_message')
 
+			contactRecords = sql.get_contacts(username)
+			return render_template( 'user-contacts.html', records = contactRecords, error = error_message )
+
+		else:
+			contactRecords = sql.get_contacts(username)
+			return render_template('user-contacts.html', records = contactRecords)
+
+
+	if 'username' not in session:
+		return redirect( url_for('get_login') )	
 
 ###################
 # UPDATE CONTACTS #
@@ -139,26 +154,30 @@ def update_contact(userid):
 		status = form.escape_special_characters(request.form['status'])
 
 		if is_empty(name):
-			return "name is empty"
+			session['error_message'] = "The name is empty."
 		elif is_empty(company):
-			return "company is empty"
+			session['error_message'] = "The company name is empty."
 		elif validate_number(number) == False:
-			return "number is empty"
+			session['error_message'] = "The mobile number is not valid."
 		elif validate_email(email) == False:
-			return "email is empty"
-		elif is_empty(address):
-			return "address is empty"
+			session['error_message'] = "The email address is not valid."
 		else:
 			if number != sql.get_mobile_number(userid):
 				if number_exists(number):
-					return "number already exists"
+					session['error_message'] = "The mobile number exists in the database."
 
 			if email != sql.get_email(userid):
 				if email_exists(email):
-					return "email already exists"
+					session['error_message'] = "The email address exists in the database."
+
+			if 'error_message' in session:
+				return redirect( url_for( 'user_contacts', username=session['username'] ) )
 
 			sql.update_contacts( userid, name, company, number, email, address, status )
 			return redirect( url_for('user_contacts', username=session['username']) )
+
+		return redirect( url_for( 'user_contacts', username=session['username'] ) )
+
 
 #########
 # ADMIN #

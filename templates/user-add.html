@@ -16,6 +16,10 @@
 			<input type="email" name="email" placeholder="HR's Email"><br>
 			<textarea name="address">HR's Address (Optional)</textarea><br>
 			<button type="submit">Add</button>
+
+			{% if error %}
+			<p style="color: red;">{{ error }}</p>
+			{% endif %}
 		</form>
 
 	</body>
