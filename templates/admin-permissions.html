@@ -12,10 +12,10 @@
 		<div id="hr-div">
 
 			{% for userid, name, company, permissions in records %}
-			<form method="post" action="{{ url_for('edit_permissions', id=userid) }}">
+			<form method="post" action="{{ url_for('edit_permissions', userid=userid) }}">
 				<p>{{ name }}</p>
 				<p>{{ company }}</p>
-				<input type="text" value="{{ permissions }}">
+				<input type="text" name="permissions" value="{{ permissions }}">
 				<button type="submit">Save</button>
 			</form>
 			{% endfor %}

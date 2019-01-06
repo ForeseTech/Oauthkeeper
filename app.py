@@ -39,10 +39,11 @@ def validate_admin_login():
 		username = request.form['username']
 		password = request.form['password']
 
-		if sql.login(username, password) == True:
-			return "it is valid"
+		if sql.login(username, password) == True and sql.is_admin(username) == True:
+			session['username'] = username
+			return redirect( url_for('admin_home') )
 		else:
-			return "it is invalid"
+			return redirect( url_for('get_admin_login') )
 
 ###############
 # ADD CONTACT #
@@ -138,3 +139,28 @@ def update_contact(userid):
 
 			sql.update_contacts( userid, name, company, number, email, address, status )
 			return redirect( url_for('user_contacts', username=session['username']) )
+
+#########
+# ADMIN #
+#########
+
+# Function which renders the admin-home.html file.
+@app.route('/admin/home')
+def admin_home():
+	return render_template('admin-home.html', username=session['username'])
+
+###############
+# PERMISSIONS #
+###############
+
+# Function which renders the admin-permissions.html file.
+@app.route('/admin/permissions')
+def get_permissions():
+	return render_template( 'admin-permissions.html', records = sql.get_permissions([]) )
+
+@app.route('/admin/edit-permissions/<userid>', methods = ['POST'])
+def edit_permissions(userid):
+	if request.method == 'POST':
+		permissions = request.form['permissions']
+		sql.update_permissions(userid, permissions)
+		return redirect( url_for('admin_home') )

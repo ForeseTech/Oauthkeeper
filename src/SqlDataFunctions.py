@@ -74,8 +74,29 @@ def update_users( userid, name, admin, username, password ):
 	try:
 		cursor.execute(sql_query)
 		conn.commit()
-	except:
+
+	except Exception as e:
 		conn.rollback()
+		print(e)
+	
+	conn.close()
+
+
+# Function which updates the permissions of a given contact.
+def update_permissions( userid, permissions ):
+	
+	conn = connection()
+	cursor = conn.cursor()
+
+	sql_query = " UPDATE CONTACTS SET PERMISSIONS='{PERMISSIONS}' WHERE USERID={USERID}; ".format( PERMISSIONS=permissions, USERID=userid )
+
+	try:
+		cursor.execute(sql_query)
+		conn.commit()
+
+	except Exception as e:
+		conn.rollback()
+		print(e)
 	
 	conn.close()
 
@@ -186,3 +207,60 @@ def get_email(userid):
 	
 	#If nothing is gotten from the DB
 	return ""
+
+# We get permissions based on the user or we return all the permissions.
+def get_permissions(usernames):
+
+	conn = connection()
+	cursor = conn.cursor()
+
+	if len(usernames) == 0:
+		sql_query = " SELECT USERID, NAME, COMPANY, PERMISSIONS FROM CONTACTS ORDER BY COMPANY ASC; "
+	
+	try:
+		cursor.execute(sql_query)
+		conn.close()
+	
+	except Exception as e:
+		conn.close()
+		print(e)
+	
+	ids = []
+	names = []
+	companies = []
+	permissions = []
+
+	for USERID, NAME, COMPANY, PERMISSIONS in cursor.fetchall():
+		ids.append(USERID)
+		names.append(NAME)
+		companies.append(COMPANY)
+		permissions.append(PERMISSIONS)
+	
+	return zip(ids, names, companies, permissions)
+		
+
+######################
+# CHECKING FUNCTIONS #
+######################
+
+# Function to check whether a user is an admin or not.
+def is_admin(username):
+
+	conn = connection()
+	cursor = conn.cursor()
+
+	sql_query = " SELECT USERNAME FROM USERS WHERE USERNAME='{USERNAME}'; ".format(USERNAME=username)
+
+	try:
+		cursor.execute(sql_query)
+		conn.close()
+	except Exception as e:
+		conn.close()
+		print(e)
+	
+	for USERNAME in cursor.fetchall():
+		if USERNAME[0] == username:
+			return True
+	
+	return False
+	
