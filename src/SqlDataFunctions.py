@@ -165,43 +165,62 @@ def get_contacts(username):
 	return zip(ids, names, companies, mobiles, emails, addresses, statuses)
 
 # Function which gets all contact data.
-def get_all_contacts( usernames=None, statuses=None ):
+def get_all_contacts( username=None, status=None ):
 	
-	#conn = connection()
-	#cursor = conn.cursor()
-
-	sql_query = " SELECT * FROM CONTACTS "
-
+	sql_query = " SELECT USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, PERMISSIONS FROM CONTACTS "
 	is_none = 0
 
 	# When there are username filters
-	if usernames != None:
+	if username != None:
 
-		sql_query += "WHERE "
+		is_none += 1
+		sql_query += "WHERE PERMISSIONS LIKE '%{USERNAME}%' ".format(USERNAME=username)
 
-		sql_query += "NAME IN ("
-		for username in usernames:
-			sql_query += "'{USERNAME}',".format(USERNAME=username)
-
-		sql_query += "\b) "
-	
 	# When there are status filters
-	if statuses != None:
+	if status != None:
 
 		is_none += 1
 		if is_none == 1:
 			sql_query += "WHERE "
 		else:
-			sql_query += "AND "
+			sql_query += " AND "
 
-		sql_query += "STATUS IN ("
-		for status in statuses:
-			sql_query += "'{STATUS}',".format(STATUS=status)
+		sql_query += "STATUS LIKE '{STATUS}' ".format(STATUS=status)
 
-		sql_query += "\b) "
-	
+	# We add the final semicolon.
 	sql_query += ";"
-	print(sql_query)
+
+	conn = connection()
+	cursor = conn.cursor()
+
+	try:
+		cursor.execute(sql_query)
+		conn.close()
+	
+	except Exception as e:
+		conn.close()
+		print(e)
+	
+	ids = []
+	names = []
+	companies = []
+	numbers = []
+	emails = []
+	addresses = []
+	statuses = []
+	permissions = []
+
+	for USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, PERMISSIONS in cursor.fetchall():
+		ids.append(USERID)
+		names.append(NAME)
+		companies.append(COMPANY)
+		numbers.append(MOBILE)
+		emails.append(EMAIL)
+		addresses.append(ADDRESS)
+		statuses.append(STATUS)
+		permissions.append(PERMISSIONS)
+	
+	return zip(ids, names, companies, numbers, emails, addresses, statuses, permissions)
 
 # Function which gets mobile number based on the contactid.
 def get_mobile_number(userid):
@@ -302,8 +321,8 @@ def get_usernames( admins=False, second_years=True ):
 	
 	usernames = []
 
-	for USERNAME in cursor.fetchal():
-		usernames.append(USERNAME)
+	for USERNAME in cursor.fetchall():
+		usernames.append(USERNAME[0])
 	
 	return usernames
 

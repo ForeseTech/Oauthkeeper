@@ -164,3 +164,40 @@ def edit_permissions(userid):
 		permissions = request.form['permissions']
 		sql.update_permissions(userid, permissions)
 		return redirect( url_for('admin_home') )
+
+##########
+# SEARCH #
+##########
+
+# Function which renders the admin-search.html file.
+@app.route('/admin/search')
+def get_search():
+	return render_template( 'admin-search.html', usernames = sql.get_usernames(), records = sql.get_all_contacts() )
+
+# Function which gets contact data based on username and status.
+@app.route('/admin/search-filter', methods = ['POST'])
+def search():
+	if request.method == 'POST':
+
+		username = request.form['username']
+		status = request.form['status']
+
+		if (username == "All") and (status == "All"):
+			this_usernames = sql.get_usernames()
+			this_records = sql.get_all_contacts()
+			return render_template( 'admin-search.html', usernames = this_usernames, records = this_records )
+
+		elif (username != "All") and (status == "All"):
+			this_usernames = sql.get_usernames()
+			this_records = sql.get_all_contacts( username = username)
+			return render_template( 'admin-search.html', usernames = this_usernames, records = this_records )
+
+		elif (username == "All") and (status != "All"):
+			this_usernames = sql.get_usernames()
+			this_records = sql.get_all_contacts( status = status )
+			return render_template( 'admin-search.html', usernames = this_usernames, records = this_records )
+
+		elif (username != "All") and (status != "All"):
+			this_usernames = sql.get_usernames()
+			this_records = sql.get_all_contacts( username = username, status = status )
+			return render_template( 'admin-search.html', usernames = this_usernames, records = this_records )

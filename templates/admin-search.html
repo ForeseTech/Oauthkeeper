@@ -18,7 +18,7 @@
 			<!-- SELECT box for selecting a username. -->
 			<select name="username">
 				<option selected>All</option>
-				{% for username in usernames% }
+				{% for username in usernames %}
 				<option>{{ username }}</option>
 				{% endfor %}
 			</select><br>
@@ -43,7 +43,7 @@
 
 		<div class="list list-div">
 
-			{% for name, company, mobile, email, status, permissions in records %}
+			{% for userid, name, company, mobile, email, address, status, permissions in records %}
 			<div class="record listing">
 				<p>{{ name }}</p>
 				<p>{{ company }}</p>
