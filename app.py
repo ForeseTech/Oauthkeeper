@@ -1,8 +1,10 @@
 import sys
 sys.path.insert(0, '/root/Oauthkeeper/src')
+sys.path.insert(0, '/root/Oauthkeeper/utilities/Logger')
 
 import SqlDataFunctions as sql
 import Formatting as form
+import Logger as logger
 from Validation import number_exists, email_exists, is_empty, validate_number, validate_email
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 
@@ -46,7 +48,9 @@ def validate_user_login():
 
 		if sql.login(username, password) == True:
 			session['username'] = username
+			logger.logged_in(username)
 			return redirect( url_for('user_contacts', username=session['username']) )
+
 		else:
 			session['error_message'] = "Invalid credentials! You shall not pass!"
 			return redirect( url_for('get_login') )
