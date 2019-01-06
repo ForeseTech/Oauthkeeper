@@ -9,10 +9,10 @@
 
 		<h1>HR Contact Permissions</h1>
 
-		<div id="hr-div">
+		<div class="list hr-div">
 
 			{% for userid, name, company, permissions in records %}
-			<form method="post" action="{{ url_for('edit_permissions', userid=userid) }}">
+			<form class="record"  method="post" action="{{ url_for('edit_permissions', userid=userid) }}">
 				<p>{{ name }}</p>
 				<p>{{ company }}</p>
 				<input type="text" name="permissions" value="{{ permissions }}">

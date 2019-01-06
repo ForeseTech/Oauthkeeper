@@ -1,3 +1,7 @@
+/*******************************/
+/* CSS for the BODY, HTML tags */
+/*******************************/
+
 body, html {
 	margin: 0;
 	padding: 0;
@@ -8,14 +12,21 @@ body, html {
 	font-family: "Verdana", sans-serif;
 }
 
+/***********************/
+/* CSS for the H1 tags */
+/***********************/
+
 h1 {
 	text-align: center;
 	margin-bottom: 5%;
 }
 
-#hr-div {
+/************************/
+/* CSS for the DIV tags */
+/************************/
+
+.list {
 	display: block;
-	width: 71%;
 
 	margin: 0 auto;
 	padding: 0;
@@ -25,7 +36,19 @@ h1 {
 	border-bottom: 2px solid black;
 }
 
-form {
+.hr-div {
+	width: 71%;
+}
+
+.list-div {
+	width: 95%;
+}
+
+/*************************/
+/* CSS for the FORM tags */
+/*************************/
+
+.record {
 	display: block;
 	width: 100%;
 
@@ -35,7 +58,21 @@ form {
 	border-top: 2px solid black;
 }
 
-p {
+.search-form {
+	display: block;
+	width: 70%;
+
+	margin: 5% auto;
+	padding: 0;
+
+	text-align: center;
+}
+
+/**********************/
+/* CSS for the P tags */
+/**********************/
+
+.record p {
 	display: inline-block;
 	width: 22%;
 
@@ -45,6 +82,15 @@ p {
 	border-right: 1px solid black;
 	text-align: center;
 }
+
+.listing p {
+	padding: 0.5%;
+	width: 16.7%;
+}
+
+/**********************/
+/* CSS for the A tags */
+/**********************/
 
 a {
 	display: block;
@@ -63,6 +109,10 @@ a {
 a:hover {
 	background-color: #EEE;
 }
+
+/*******************************/
+/* CSS for the FORM INPUT tags */
+/*******************************/
 
 input {
 	display: inline-block;
@@ -84,4 +134,11 @@ button {
 	vertical-align: middle;
 
 	cursor: pointer;
+}
+
+select {
+	width: 30%;
+	margin: 1% 0% 0% 0%;
+
+	font-size: 105%;
 }
