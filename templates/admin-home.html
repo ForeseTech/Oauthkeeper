@@ -2,51 +2,16 @@
 
 	<head>
 		<title>Home | Oauthkeeper</title>
-		<style>
-		
-		body, html {
-			margin: 0;
-			padding: 0;
-
-			width: 100%;
-			height: 100%;
-
-			font-family: "Verdana", sans-serif;
-		}
-
-		h1 {
-			text-align: center;
-			margin-bottom: 5%;
-		}
-
-		a {
-			display: block;
-			width: 20%;
-
-			margin: 2.5% auto;
-			padding: 1%;
-
-			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-			text-align: center;
-			text-decoration: none;
-			font-size: 120%;
-		}
-
-		a:hover {
-			background-color: #EEE;
-		}
-
-		</style>
+		<link href="../static/css/permissions.css" rel="stylesheet">"
 	</head>
 
 	<body>
 
 	<!-- We need permission editing, search, stats, users  -->		
 
-		<h1>Welcome, Arjun!</h1>
+		<h1>Welcome, {{ username }}!</h1>
 
-		<a href="#">HR Contact Permissions</a>
+		<a href="{{ url_for('get_permissions') }}">HR Contact Permissions</a>
 		<a href="#">Search Contacts</a>
 		<a href="#">HR Statistics</a>
 		<a href="#">Second-Years</a>

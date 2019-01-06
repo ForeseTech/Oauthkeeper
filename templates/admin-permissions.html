@@ -11,28 +11,14 @@
 
 		<div id="hr-div">
 
-			<form>
-				<p>Tony Stark</p>
-				<p>Stark Industries</p>
-				<input type="text" value="navya, vykunth, rahil">
+			{% for userid, name, company, permissions in records %}
+			<form method="post" action="{{ url_for('edit_permissions', id=userid) }}">
+				<p>{{ name }}</p>
+				<p>{{ company }}</p>
+				<input type="text" value="{{ permissions }}">
 				<button type="submit">Save</button>
 			</form>
-
-			<form>
-				<p>Tony Stark</p>
-				<p>Stark Industries</p>
-				<input type="text" value="navya, vykunth, rahil">
-				<button type="submit">Save</button>
-			</form>
-
-			<form>
-				<p>Tony Stark</p>
-				<p>Stark Industries</p>
-				<input type="text" value="navya, vykunth, rahil">
-				<button type="submit">Save</button>
-			</form>
-
-
+			{% endfor %}
 
 		</div>
 
