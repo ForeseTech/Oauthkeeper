@@ -164,6 +164,45 @@ def get_contacts(username):
 	
 	return zip(ids, names, companies, mobiles, emails, addresses, statuses)
 
+# Function which gets all contact data.
+def get_all_contacts( usernames=None, statuses=None ):
+	
+	#conn = connection()
+	#cursor = conn.cursor()
+
+	sql_query = " SELECT * FROM CONTACTS "
+
+	is_none = 0
+
+	# When there are username filters
+	if usernames != None:
+
+		sql_query += "WHERE "
+
+		sql_query += "NAME IN ("
+		for username in usernames:
+			sql_query += "'{USERNAME}',".format(USERNAME=username)
+
+		sql_query += "\b) "
+	
+	# When there are status filters
+	if statuses != None:
+
+		is_none += 1
+		if is_none == 1:
+			sql_query += "WHERE "
+		else:
+			sql_query += "AND "
+
+		sql_query += "STATUS IN ("
+		for status in statuses:
+			sql_query += "'{STATUS}',".format(STATUS=status)
+
+		sql_query += "\b) "
+	
+	sql_query += ";"
+	print(sql_query)
+
 # Function which gets mobile number based on the contactid.
 def get_mobile_number(userid):
 
@@ -238,6 +277,36 @@ def get_permissions(usernames):
 	
 	return zip(ids, names, companies, permissions)
 		
+
+# Function to get all the usernames in the database. By default, the functions does not return admins.
+def get_usernames( admins=False, second_years=True ):
+	
+	conn = connection()
+	cursor = conn.cursor()
+
+	if admins == False and second_years == True:
+		sql_query = " SELECT USERNAME FROM USERS WHERE ADMIN&1=0; "
+	elif admins == True and second_years == False:
+		sql_query = " SELECT USERNAME FROM USERS WHERE ADMIN&1=1; "
+	else:
+		sql_query = " SELECT USERNAME FROM USERS; "
+	
+	try:
+		cursor.execute(sql_query)
+		conn.close()
+	
+	except Exception as e:
+		conn.close()
+		print(e)
+	
+	
+	usernames = []
+
+	for USERNAME in cursor.fetchal():
+		usernames.append(USERNAME)
+	
+	return usernames
+
 
 ######################
 # CHECKING FUNCTIONS #
