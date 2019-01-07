@@ -75,9 +75,18 @@ def logout():
 	session.pop('username')
 	return redirect( url_for('get_login') )
 
+
+@app.route('/logout-admin')
+def admin_logout():
+	session.pop('username')
+	return redirect( url_for('get_admin_login') )
+
+
+
 ###############
 # ADD CONTACT #
 ###############
+
 
 @app.route('/add')
 def add_contact():
