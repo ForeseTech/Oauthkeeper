@@ -115,6 +115,7 @@ def contact_add():
 				session['error_message'] = "The email address exists in the database."
 			else:
 				sql.contacts_insert( name, company, number, email, address, session['username'] )
+				logger.added_contact( session['username'], name, company )
 				return redirect( url_for('user_contacts', username=session['username']) )
 
 		return redirect( url_for('add_contact') )
@@ -182,8 +183,14 @@ def update_contact(userid):
 			if 'error_message' in session:
 				return redirect( url_for( 'user_contacts', username=session['username'] ) )
 
+			if 'error_message' not in session:
+				logger.update_contact( session['username'], name, company )
+
 			sql.update_contacts( userid, name, company, number, email, address, status )
 			return redirect( url_for('user_contacts', username=session['username']) )
+
+		if 'error_message' not in session:
+			logger.update_contact( session['username'], name, company )
 
 		return redirect( url_for( 'user_contacts', username=session['username'] ) )
 
