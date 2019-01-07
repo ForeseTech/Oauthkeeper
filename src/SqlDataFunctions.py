@@ -1,9 +1,11 @@
 from SqlConnections import connection  
 import MySQLdb
 
+
 ####################
 # INSERT FUNCTIONS #
 ####################
+
 
 # Function which inserts given details into USERS table.
 def users_insert( name, admin, username, password, team ):
@@ -40,9 +42,11 @@ def contacts_insert( name, company, mobile, email, address, current_user ):
 	conn.close()
 
 
+
 ####################
 # UPDATE FUNCTIONS #
 ####################
+
 
 
 # Function which updates data in the CONTACTS table.
@@ -101,9 +105,12 @@ def update_permissions( userid, permissions ):
 	conn.close()
 
 
+
+
 ###################
 # LOGIN FUNCTIONS #
 ###################
+
 
 # Function which validates a username/password login.
 def login(username, password):
@@ -126,9 +133,12 @@ def login(username, password):
 	return False
 
 
+
+
 #################
 # GET FUNCTIONS #
 #################
+
 
 # Function which gets contacts data which have been permitted to be viewed by a given user.
 def get_contacts(username):
@@ -327,9 +337,37 @@ def get_usernames( admins=False, second_years=True ):
 	return usernames
 
 
+# Function which gets statistics (count) of each status.
+def get_statistics():
+
+	conn = connection()
+	cursor = conn.cursor()
+
+	sql_query = " SELECT STATUS, COUNT(*) AS STATS FROM USERS GROUP BY STATUS; "
+
+	try:
+		cursor.execute(sql_query):
+		conn.close()
+	
+	except Exception as e:
+		conn.close()
+		print(e)
+	
+	statuses = []
+	statistics = []
+
+	from STATUS, STATS in cursor.fetchall():
+		statuses.append(STATUS)
+		statistics.append(STATS)
+	
+	return zip(statuses, statistics)
+
+
+
 ######################
 # CHECKING FUNCTIONS #
 ######################
+
 
 # Function to check whether a user is an admin or not.
 def is_admin(username):
@@ -351,4 +389,3 @@ def is_admin(username):
 			return True
 	
 	return False
-	
