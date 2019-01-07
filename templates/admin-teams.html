@@ -1,21 +1,47 @@
 <!DOCTYPE html>
 
 	<head>
-		<title>Teams | Oauthkeeper</title>
-		<link href="../static/css/permissions.css" rel="stylesheet">"
+		<title>Team Statistics | Oauthkeeper</title>
+		<link href="../static/css/permissions.css" rel="stylesheet">
 	</head>
 
 	<body>
 
-	<!-- We need permission editing, search, stats, users  -->		
+		<!-- The HTML for the HEADER.  -->
+		<h1>HRs by Teams</h1>
 
-		<h1>Teams</h1>
+		<!-- The HTML for the SEARCH.  -->
+		<form class="search-form" method="post" action="{{ url_for('team_statistics') }}">
+			
+			<!-- SELECT box for selecting the status.-->
+			<select name="ed">
+				<option value="All" selected>All</option>
+				<option value="Aravind">Aravind's Teams</option>
+				<option value="Harshitha">Harshitha's Team</option>
+				<option value="Jayanth">Jayanth's Team</option>
+				<option value="Karishni">Karishni's Team</option>
+				<option value="Kriti">Kriti's Team</option>
+			</select><br><br>
 
-		<a href="{{ url_for('get_teams_statistics', ed = 'Aravind') }}">Team 1 (Aravind)</a>
-		<a href="{{ url_for('get_teams_statistics', ed = 'Harshitha') }}">Team 2 (Harshitha)</a>
-		<a href="{{ url_for('get_teams_statistics', ed = 'Jayanth') }}">Team 3 (Jayanth)</a>
-		<a href="{{ url_for('get_teams_statistics', ed = 'Karishni') }}">Team 4 (Karishni)</a>
-		<a href="{{ url_for('get_teams_statistics', ed = 'Kriti') }}">Team 5 (Kriti)</a>
+			<!-- Submit Button. -->
+			<button type="submit">Go!</button>
+		</form>
+
+		<div class="list list-div">
+
+			{% for userid, name, company, mobile, email, address, status, permissions in records %}
+			<div class="record listing">
+				<p>{{ name }}</p>
+				<p>{{ company }}</p>
+				<p style="width: 7.5%;">{{ mobile }}</p>
+				<p style="width: 20%;">{{ email }}</p>
+				<p>{{ status }}</p>
+				<p style="width: 13%;">{{ permissions }}</p>
+			</div>
+			{% endfor %}
+		
+		</div>
+
 
 	</body>
 
