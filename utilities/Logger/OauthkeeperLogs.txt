@@ -8,3 +8,6 @@
 [2019-01-07 08:49:12.508826] Navya logged in.
 [2019-01-07 08:49:34.708910] Aravind logged in.
 [2019-01-07 08:49:48.447409] Aravind logged in.
+[2019-01-07 14:15:47.696112] Test logged in.
+[2019-01-07 14:16:41.789485] Test added Arjun (Hello) as a contact.
+[2019-01-07 14:16:49.733141] Test updated Arjun (Hello) in his/her contacts.

@@ -1,5 +1,6 @@
 forese
 
 *.pyc
+OauthkeeperLogs.txt
 SqlConnections.py
 InsertUsers.py
