@@ -10,6 +10,7 @@
 		<h1>Your Contacts</h1>
 
 		<a href="{{ url_for('add_contact') }}">Add Contact</a>
+		<a href="{{ url_for('logout') }}" style="padding-top:.5%">Logout</a>
 
 		{% for contactid, name, company, number, email, address, status in records %}
 

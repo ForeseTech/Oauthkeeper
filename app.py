@@ -69,6 +69,11 @@ def validate_admin_login():
 			session['error_message'] = "Invalid credentials! You shall not pass!"
 			return redirect( url_for('get_admin_login') )
 
+@app.route('/logout')
+def logout():
+	session.pop('username')
+	return redirect( url_for('get_login') )
+
 ###############
 # ADD CONTACT #
 ###############
