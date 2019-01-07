@@ -111,7 +111,7 @@ def login(username, password):
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " SELECT USERNAME FROM USERS WHERE USERNAME=\"{U}\" AND PASSWORD=\"{P}\"; ".format(U=username, P=password)
+	sql_query = " SELECT USERNAME FROM USERS WHERE USERNAME=\"{U}\" AND PASSWORD=\"{P}\" AND ADMIN&1=0; ".format(U=username, P=password)
 
 	try:
 		cursor.execute(sql_query)
