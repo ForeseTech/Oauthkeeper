@@ -6,12 +6,12 @@ import MySQLdb
 ####################
 
 # Function which inserts given details into USERS table.
-def users_insert( name, admin, username, password ):
+def users_insert( name, admin, username, password, team ):
 
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " INSERT INTO USERS VALUES ( USERID, \"{NAME}\", {ADMIN}, \"{USERNAME}\", \"{PASSWORD}\" ); ".format(NAME=name, ADMIN=admin, USERNAME=username, PASSWORD=password)
+	sql_query = " INSERT INTO USERS VALUES ( USERID, \"{NAME}\", {ADMIN}, \"{USERNAME}\", \"{PASSWORD}\", \"{TEAM}\" ); ".format(NAME=name, ADMIN=admin, USERNAME=username, PASSWORD=password, TEAM=team)
 
 	try:
 		cursor.execute(sql_query)
