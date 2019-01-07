@@ -337,7 +337,7 @@ def is_admin(username):
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " SELECT USERNAME FROM USERS WHERE USERNAME='{USERNAME}'; ".format(USERNAME=username)
+	sql_query = " SELECT USERNAME FROM USERS WHERE ADMIN&1=1; "
 
 	try:
 		cursor.execute(sql_query)
