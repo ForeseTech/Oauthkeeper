@@ -46,7 +46,7 @@ def validate_user_login():
 		username = request.form['username']
 		password = request.form['password']
 
-		if sql.login(username, password) == True:
+		if sql.login(username, password) == True and sql.is_admin(username) == False:
 			session['username'] = username
 			logger.logged_in(username)
 			return redirect( url_for('user_contacts', username=session['username']) )
@@ -64,6 +64,7 @@ def validate_admin_login():
 
 		if sql.login(username, password) == True and sql.is_admin(username) == True:
 			session['username'] = username
+			logger.logged_in(username)
 			return redirect( url_for('admin_home') )
 		else:
 			session['error_message'] = "Invalid credentials! You shall not pass!"
@@ -218,6 +219,8 @@ def edit_permissions(userid):
 	if request.method == 'POST':
 		permissions = request.form['permissions']
 		sql.update_permissions(userid, permissions)
+		logger.edited_permissions( session['username'], userid, permissions )
+
 		return redirect( url_for('admin_home') )
 
 ##########
