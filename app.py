@@ -259,3 +259,15 @@ def search():
 			this_usernames = sql.get_usernames()
 			this_records = sql.get_all_contacts( username = username, status = status )
 			return render_template( 'admin-search.html', usernames = this_usernames, records = this_records )
+
+
+
+#########
+# STATS #
+#########
+
+
+# Function which gets statistics.
+@app.route('/admin/stats')
+def get_stats():
+	return render_template( 'admin-stats.html', statistics = sql.get_statistics() )

@@ -343,10 +343,10 @@ def get_statistics():
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " SELECT STATUS, COUNT(*) AS STATS FROM USERS GROUP BY STATUS; "
+	sql_query = " SELECT STATUS, COUNT(*) AS STATS FROM CONTACTS GROUP BY STATUS ORDER BY STATUS ASC; "
 
 	try:
-		cursor.execute(sql_query):
+		cursor.execute(sql_query);
 		conn.close()
 	
 	except Exception as e:
@@ -356,7 +356,7 @@ def get_statistics():
 	statuses = []
 	statistics = []
 
-	from STATUS, STATS in cursor.fetchall():
+	for STATUS, STATS in cursor.fetchall():
 		statuses.append(STATUS)
 		statistics.append(STATS)
 	
