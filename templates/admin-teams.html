@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+	<head>
+		<title>Teams | Oauthkeeper</title>
+		<link href="../static/css/permissions.css" rel="stylesheet">"
+	</head>
+
+	<body>
+
+	<!-- We need permission editing, search, stats, users  -->		
+
+		<h1>Teams</h1>
+
+		<a href="{{ url_for('get_teams_statistics', ed = 'Aravind') }}">Team 1 (Aravind)</a>
+		<a href="{{ url_for('get_teams_statistics', ed = 'Harshitha') }}">Team 2 (Harshitha)</a>
+		<a href="{{ url_for('get_teams_statistics', ed = 'Jayanth') }}">Team 3 (Jayanth)</a>
+		<a href="{{ url_for('get_teams_statistics', ed = 'Karishni') }}">Team 4 (Karishni)</a>
+		<a href="{{ url_for('get_teams_statistics', ed = 'Kriti') }}">Team 5 (Kriti)</a>
+
+	</body>
+
+</html>
