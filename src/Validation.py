@@ -8,7 +8,7 @@ from SqlConnections import connection
 
 # Function which validates if a number is valid or not.
 def validate_number( number ):
-	valid = re.match("[0-9]{10}", number)
+	valid = re.match("\b(([0-9]{10})|([0-9]{8}))\b", number)
 	
 	if valid:
 		return True
@@ -26,7 +26,7 @@ def validate_username( username ):
 
 # Function which validates if an email is valid or not.
 def validate_email( email ):
-	valid = re.match("[a-zA-Z0-9._]+@[a-zA-Z0-9]+.[a-zA-Z]+", email)
+	valid = re.match("[a-zA-Z0-9._]+@[a-zA-Z0-9]+(.[a-zA-Z]+)+", email)
 
 	if valid:
 		return True
