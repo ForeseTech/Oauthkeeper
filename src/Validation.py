@@ -29,9 +29,10 @@ def validate_username( username ):
 
 # Function which validates if an email is valid or not.
 def validate_email( email ):
+	email = email.strip()
 	valid = re.match("[a-zA-Z0-9._]+@[a-zA-Z0-9]+(.[a-zA-Z]+)+", email)
 
-	if valid:
+	if valid or ( len(email) == 0 ):
 		return True
 	else:
 		return False
