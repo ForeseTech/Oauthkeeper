@@ -1,6 +1,8 @@
 forese
 
 *.pyc
+*.ini
+*.sock
 newdb.csv
 OauthkeeperLogs.txt
 SqlConnections.py

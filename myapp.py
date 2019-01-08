@@ -28,6 +28,7 @@ def get_login():
 		return render_template( 'user-login.html', error=None)
 
 # Function which serves the admin-login page.
+@app.route('/admin/')
 @app.route('/admin')
 def get_admin_login():
 
@@ -87,7 +88,7 @@ def admin_logout():
 # ADD CONTACT #
 ###############
 
-
+@app.route('/add/')
 @app.route('/add')
 def add_contact():
 
@@ -121,20 +122,25 @@ def contact_add():
 		else:
 			if number_exists(number):
 				session['error_message'] = "The mobile number exists in the database."
-			elif email_exists(email):
+			elif email_exists(email) and len(email.strip()) != 0:
 				session['error_message'] = "The email address exists in the database."
 			else:
 				sql.contacts_insert( name, company, number, email, address, session['username'] )
 				logger.added_contact( session['username'], name, company )
 				return redirect( url_for('user_contacts', username=session['username']) )
+		
+		if 'error_message' in session:
+			return redirect( url_for('add_contact') )
 
-		return redirect( url_for('add_contact') )
-
+		sql.contacts_insert( name, company, number, email, address, session['username'] )
+		logger.added_contact( session['username'], name, company )
+		return redirect( url_for('user_contacts', username=session['username']) )
 
 ####################
 # DISPLAY CONTACTS #
 ####################
 
+@app.route('/<username>/')
 @app.route('/<username>')
 def user_contacts(username):
 
@@ -211,6 +217,7 @@ def update_contact(userid):
 
 # Function which renders the admin-home.html file.
 @app.route('/admin/home')
+@app.route('/admin/home')
 def admin_home():
 	return render_template('admin-home.html', username=session['username'])
 
@@ -219,6 +226,7 @@ def admin_home():
 ###############
 
 # Function which renders the admin-permissions.html file.
+@app.route('/admin/permissions/')
 @app.route('/admin/permissions')
 def get_permissions():
 	return render_template( 'admin-permissions.html', records = sql.get_permissions([]) )
@@ -237,6 +245,7 @@ def edit_permissions(userid):
 ##########
 
 # Function which renders the admin-search.html file.
+@app.route('/admin/search/')
 @app.route('/admin/search')
 def get_search():
 	return render_template( 'admin-search.html', usernames = sql.get_usernames(), records = sql.get_all_contacts() )
@@ -278,11 +287,13 @@ def search():
 
 # Function which gets statistics.
 @app.route('/admin/stats')
+@app.route('/admin/stats')
 def get_stats():
 	return render_template( 'admin-stats.html', statistics = sql.get_statistics() )
 
 
 # Function which gets team statistics.
+@app.route('/admin/team-statistics/')
 @app.route('/admin/team-statistics')
 def get_team_statistics():
 	return render_template( 'admin-teams.html', records = sql.get_all_team_contacts(ed = "All") )
@@ -294,3 +305,6 @@ def filter_team_statistics():
 		status = request.form['status']
 
 		return render_template( 'admin-teams.html', records = sql.get_all_team_contacts(ed = ed, status = status))
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
