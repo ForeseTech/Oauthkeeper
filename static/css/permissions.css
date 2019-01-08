@@ -18,7 +18,7 @@ body, html {
 
 h1 {
 	text-align: center;
-	margin-bottom: 5%;
+	margin-bottom: 1%;
 }
 
 /************************/
@@ -97,7 +97,7 @@ h1 {
 /* CSS for the A tags */
 /**********************/
 
-a {
+.home-tags {
 	display: block;
 	width: 20%;
 
@@ -111,9 +111,23 @@ a {
 	font-size: 120%;
 }
 
-a:hover {
+.home-tags:hover {
 	background-color: #EEE;
 }
+
+
+.page-link {
+	display: block;
+	width: 15%;
+
+	margin: 2% auto;
+	padding: 1%;
+
+	font-size: 110%;
+	text-align: center;
+	text-decoration: none;
+}
+
 
 /*******************************/
 /* CSS for the FORM INPUT tags */

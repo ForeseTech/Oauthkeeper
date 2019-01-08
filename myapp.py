@@ -238,7 +238,7 @@ def edit_permissions(userid):
 		sql.update_permissions(userid, permissions)
 		logger.edited_permissions( session['username'], userid, permissions )
 
-		return redirect( url_for('admin_home') )
+		return redirect( url_for('get_permissions') )
 
 ##########
 # SEARCH #
