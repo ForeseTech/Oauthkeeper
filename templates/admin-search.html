@@ -17,7 +17,7 @@
 
 			<!-- SELECT box for selecting a username. -->
 			<select name="username">
-				<option selected>All</option>
+				<option selected>Username</option>
 				{% for username in usernames %}
 				<option>{{ username }}</option>
 				{% endfor %}
@@ -40,7 +40,10 @@
 				<option value="Emailed/Confirmed">Emailed/Confirmed</option>
 				<option value="Emailed/Declined">Emailed/Declined</option>
 				<option value="Emailed/Awaiting Response">Emailed/Awaiting Response</option>
-			</select><br><br>
+			</select><br>
+
+			<input type="number" name="number" class="search-input" style="width: 28.5%; font-size: 90%;" placeholder="Mobile Number"><br>
+			<input type="text" name="company" class="search-input" style="width: 28.5%; font-size: 90%;" placeholder="Company Name"><br><br>
 
 			<!-- Submit Button. -->
 			<button type="submit">Search!</button>

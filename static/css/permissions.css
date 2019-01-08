@@ -144,6 +144,15 @@ input {
 	font-size: 105%;
 }
 
+.search-input {
+	display: block
+	width: 28.5%;
+	margin: 1% 0% 0% 0%;
+
+	font-size: 90%;
+
+}
+
 button {
 	display: inline-block;
 	width: 17%;
@@ -159,5 +168,5 @@ select {
 	width: 30%;
 	margin: 1% 0% 0% 0%;
 
-	font-size: 105%;
+	font-size: 110%;
 }

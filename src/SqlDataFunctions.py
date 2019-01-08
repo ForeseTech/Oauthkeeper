@@ -175,13 +175,13 @@ def get_contacts(username):
 	return zip(ids, names, companies, mobiles, emails, addresses, statuses)
 
 # Function which gets all contact data.
-def get_all_contacts( username=None, status=None ):
+def get_all_contacts( username=None, status=None, number=None, company=None ):
 	
 	sql_query = " SELECT USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, PERMISSIONS FROM CONTACTS "
 	is_none = 0
 
 	# When there are username filters
-	if username != None:
+	if username != None and username!= "Username":
 
 		is_none += 1
 		sql_query += "WHERE PERMISSIONS LIKE '%{USERNAME}%' ".format(USERNAME=username)
@@ -196,6 +196,28 @@ def get_all_contacts( username=None, status=None ):
 			sql_query += " AND "
 
 		sql_query += "STATUS LIKE '{STATUS}' ".format(STATUS=status)
+	
+	# When there are mobile number filters.
+	if number != None:
+		
+		is_none += 1
+		if is_none == 1:
+			sql_query += "WHERE "
+		else:
+			sql_query += " AND "
+
+		sql_query += "MOBILE LIKE '%{MOBILE}%' ".format(MOBILE=number)
+	
+	# When there are company name filters.
+	if company != None:
+		
+		is_none += 1
+		if is_none == 1:
+			sql_query += "WHERE "
+		else:
+			sql_query += " AND "
+
+		sql_query += "COMPANY LIKE \"%{COMPANY}%\" ".format(COMPANY=company)
 
 	# We add the final semicolon.
 	sql_query += ";"

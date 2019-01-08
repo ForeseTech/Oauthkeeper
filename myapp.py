@@ -267,27 +267,12 @@ def search():
 
 		username = request.form['username']
 		status = request.form['status']
+		number = request.form['number']
+		company = request.form['company']
 
-		if (username == "All") and (status == "All"):
-			this_usernames = sql.get_usernames()
-			this_records = sql.get_all_contacts()
-			return render_template( 'admin-search.html', usernames = this_usernames, records = this_records )
-
-		elif (username != "All") and (status == "All"):
-			this_usernames = sql.get_usernames()
-			this_records = sql.get_all_contacts( username = username)
-			return render_template( 'admin-search.html', usernames = this_usernames, records = this_records )
-
-		elif (username == "All") and (status != "All"):
-			this_usernames = sql.get_usernames()
-			this_records = sql.get_all_contacts( status = status )
-			return render_template( 'admin-search.html', usernames = this_usernames, records = this_records )
-
-		elif (username != "All") and (status != "All"):
-			this_usernames = sql.get_usernames()
-			this_records = sql.get_all_contacts( username = username, status = status )
-			return render_template( 'admin-search.html', usernames = this_usernames, records = this_records )
-
+		this_usernames = sql.get_usernames()
+		this_records = sql.get_all_contacts( username, status, number, company )
+		return render_template( 'admin-search.html', usernames = this_usernames, records = this_records )
 
 
 #########
