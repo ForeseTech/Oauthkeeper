@@ -187,7 +187,7 @@ def update_contact(userid):
 					session['error_message'] = "The mobile number exists in the database."
 
 			if email != sql.get_email(userid):
-				if email_exists(email):
+				if email_exists(email) and (len(email.strip()) != 0):
 					session['error_message'] = "The email address exists in the database."
 
 			if 'error_message' in session:
