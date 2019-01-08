@@ -187,7 +187,7 @@ def get_all_contacts( username=None, status=None ):
 		sql_query += "WHERE PERMISSIONS LIKE '%{USERNAME}%' ".format(USERNAME=username)
 
 	# When there are status filters
-	if status != None:
+	if status != None and status!= "All":
 
 		is_none += 1
 		if is_none == 1:
@@ -362,6 +362,68 @@ def get_statistics():
 	
 	return zip(statuses, statistics)
 
+
+# Function which gets the members of each team.
+def get_team_members(ed):
+
+	conn = connection()
+	cursor = conn.cursor()
+
+	sql_query = "SELECT USERNAME FROM USERS WHERE TEAM = \"{TEAM}\"; ".format(TEAM=ed)
+
+	if ed == "All":
+		sql_query = "SELECT USERNAME FROM USERS; "
+
+	try:
+		cursor.execute(sql_query)
+		conn.close()
+	
+	except Exception as e:
+		conn.close()
+		print(e)
+	
+	members = []
+
+	for USERNAME in cursor.fetchall():
+		members.append(USERNAME[0])
+	
+	return members
+
+
+# Function which gets all contacts handled by that particular team.
+def get_all_team_contacts(ed, status=None):
+
+	# We first get the members of each team. We then get the all the contacts of that team.
+
+	members = get_team_members(ed)
+
+	ids = []
+	names = []
+	companies = []
+	numbers = []
+	emails = []
+	addresses = []
+	statuses = []
+	permissions = []
+	
+	for member in members:
+		
+		records = get_all_contacts(member, status)
+
+		for userid, name, company, number, email, address, status, permission in records:
+			ids.append(userid)
+			names.append(name)
+			companies.append(company)
+			numbers.append(number)
+			emails.append(email)
+			addresses.append(address)
+			statuses.append(status)
+			permissions.append(permission)
+
+	return zip(ids, names, companies, numbers, emails, addresses, statuses, permissions)
+				
+
+# Function which gets the members of 
 
 
 ######################

@@ -36,6 +36,6 @@ def edited_permissions(username, userid, permissions):
 	file_object = open("utilities/Logger/OauthkeeperLogs.txt", "a")
 
 	current_date = datetime.datetime.now()
-	log_message = "[{DATETIME}] {USERNAME} edited the permissions for CONTACT NO {USERID} to '{PERMISSIONS}'.\n".format( DATETIME=current_date, USERID=userid, PERMISSIONS=permissions )
+	log_message = "[{DATETIME}] {USERNAME} edited the permissions for CONTACT NO {USERID} to '{PERMISSIONS}'.\n".format( DATETIME=current_date, USERNAME=username, USERID=userid, PERMISSIONS=permissions )
 
 	file_object.write(log_message)

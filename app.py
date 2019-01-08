@@ -280,3 +280,17 @@ def search():
 @app.route('/admin/stats')
 def get_stats():
 	return render_template( 'admin-stats.html', statistics = sql.get_statistics() )
+
+
+# Function which gets team statistics.
+@app.route('/admin/team-statistics')
+def get_team_statistics():
+	return render_template( 'admin-teams.html', records = sql.get_all_team_contacts(ed = "All") )
+
+@app.route('/admin/get-team-statistics', methods = ['POST'])
+def filter_team_statistics():
+	if request.method == 'POST':
+		ed = request.form['ed']
+		status = request.form['status']
+
+		return render_template( 'admin-teams.html', records = sql.get_all_team_contacts(ed = ed, status = status))

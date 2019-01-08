@@ -2,7 +2,7 @@
 
 	<head>
 		<title>Home | Oauthkeeper</title>
-		<link href="../static/css/permissions.css" rel="stylesheet">"
+		<link href="../static/css/permissions.css" rel="stylesheet">
 	</head>
 
 	<body>
@@ -14,7 +14,7 @@
 		<a href="{{ url_for('get_permissions') }}">HR Contact Permissions</a>
 		<a href="{{ url_for('get_search') }}">Search Contacts</a>
 		<a href="{{ url_for('get_stats') }}">HR Statistics</a>
-		<a href="#">Second-Years</a>
+		<a href="{{ url_for('get_team_statistics') }}">Second-Years</a>
 		<a href="{{ url_for('admin_logout') }}">Logout</a>
 
 	</body>
