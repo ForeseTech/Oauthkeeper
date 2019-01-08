@@ -219,7 +219,10 @@ def update_contact(userid):
 @app.route('/admin/home')
 @app.route('/admin/home')
 def admin_home():
-	return render_template('admin-home.html', username=session['username'])
+	if 'username' in session and sql.is_admin(session['username']):
+		return render_template('admin-home.html', username=session['username'])
+	else:
+		return redirect( url_for('get_admin_login') )
 
 ###############
 # PERMISSIONS #
@@ -229,12 +232,16 @@ def admin_home():
 @app.route('/admin/permissions/')
 @app.route('/admin/permissions')
 def get_permissions():
-	return render_template( 'admin-permissions.html', records = sql.get_permissions([]) )
+	if 'username' in session and sql.is_admin(session['username']):
+		return render_template( 'admin-permissions.html', records = sql.get_permissions([]) )
+	else:
+		return redirect( url_for('get_admin_login') )
 
 @app.route('/admin/edit-permissions/<userid>', methods = ['POST'])
 def edit_permissions(userid):
 	if request.method == 'POST':
 		permissions = request.form['permissions']
+
 		sql.update_permissions(userid, permissions)
 		logger.edited_permissions( session['username'], userid, permissions )
 
@@ -248,7 +255,10 @@ def edit_permissions(userid):
 @app.route('/admin/search/')
 @app.route('/admin/search')
 def get_search():
-	return render_template( 'admin-search.html', usernames = sql.get_usernames(), records = sql.get_all_contacts() )
+	if 'username' in session and sql.is_admin(session['username']):
+		return render_template( 'admin-search.html', usernames = sql.get_usernames(), records = sql.get_all_contacts() )
+	else:
+		return redirect( url_for('get_admin_login') )
 
 # Function which gets contact data based on username and status.
 @app.route('/admin/search-filter', methods = ['POST'])
@@ -296,7 +306,10 @@ def get_stats():
 @app.route('/admin/team-statistics/')
 @app.route('/admin/team-statistics')
 def get_team_statistics():
-	return render_template( 'admin-teams.html', records = sql.get_all_team_contacts(ed = "All") )
+	if 'username' in session and sql.is_admin(session['username']):
+		return render_template( 'admin-teams.html', records = sql.get_all_team_contacts(ed = "All") )
+	else:
+		return redirect( url_for('get_admin_login') )
 
 @app.route('/admin/get-team-statistics', methods = ['POST'])
 def filter_team_statistics():
