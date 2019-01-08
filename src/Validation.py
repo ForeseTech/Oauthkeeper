@@ -8,9 +8,12 @@ from SqlConnections import connection
 
 # Function which validates if a number is valid or not.
 def validate_number( number ):
-	valid = re.match("\b(([0-9]{10})|([0-9]{8}))\b", number)
+	number = number.strip()
+	valid = re.match("^([0-9]+)$", number)
 	
-	if valid:
+	length = len(number)
+
+	if valid and ( length == 10 or length == 8 ) :
 		return True
 	else:
 		return False
