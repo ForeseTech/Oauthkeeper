@@ -1,6 +1,7 @@
 forese
 
 *.pyc
+newdb.csv
 OauthkeeperLogs.txt
 SqlConnections.py
 InsertUsers.py
