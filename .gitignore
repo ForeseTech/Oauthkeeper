@@ -4,6 +4,8 @@ forese
 *.ini
 *.sock
 newdb.csv
+sqldump.txt
 OauthkeeperLogs.txt
+wsgi.py
 SqlConnections.py
 InsertUsers.py

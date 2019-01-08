@@ -308,17 +308,17 @@ def get_permissions(usernames):
 		
 
 # Function to get all the usernames in the database. By default, the functions does not return admins.
-def get_usernames( admins=False, second_years=True ):
+def get_usernames( admins=True, second_years=True ):
 	
 	conn = connection()
 	cursor = conn.cursor()
 
 	if admins == False and second_years == True:
-		sql_query = " SELECT USERNAME FROM USERS WHERE ADMIN&1=0; "
+		sql_query = " SELECT USERNAME FROM USERS WHERE ADMIN&1=0 ORDER BY USERNAME; "
 	elif admins == True and second_years == False:
-		sql_query = " SELECT USERNAME FROM USERS WHERE ADMIN&1=1; "
+		sql_query = " SELECT USERNAME FROM USERS WHERE ADMIN&1=1 ORDER BY USERNAME; "
 	else:
-		sql_query = " SELECT USERNAME FROM USERS; "
+		sql_query = " SELECT USERNAME FROM USERS ORDER BY USERNAME; "
 	
 	try:
 		cursor.execute(sql_query)
@@ -369,7 +369,7 @@ def get_team_members(ed):
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = "SELECT USERNAME FROM USERS WHERE TEAM = \"{TEAM}\"; ".format(TEAM=ed)
+	sql_query = "SELECT USERNAME FROM USERS WHERE TEAM = \"{TEAM}\" ORDER BY USERNAME ASC; ".format(TEAM=ed)
 
 	if ed == "All":
 		sql_query = "SELECT USERNAME FROM USERS; "
