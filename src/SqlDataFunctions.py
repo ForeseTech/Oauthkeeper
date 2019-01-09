@@ -221,7 +221,6 @@ def get_all_contacts( username=None, status=None, number=None, company=None ):
 
 	# We add the final semicolon.
 	sql_query += ";"
-
 	conn = connection()
 	cursor = conn.cursor()
 
@@ -432,14 +431,14 @@ def get_all_team_contacts(ed, status=None):
 		
 		records = get_all_contacts(member, status)
 
-		for userid, name, company, number, email, address, status, permission in records:
+		for userid, name, company, number, email, address, this_status, permission in records:
 			ids.append(userid)
 			names.append(name)
 			companies.append(company)
 			numbers.append(number)
 			emails.append(email)
 			addresses.append(address)
-			statuses.append(status)
+			statuses.append(this_status)
 			permissions.append(permission)
 
 	return zip(ids, names, companies, numbers, emails, addresses, statuses, permissions)
