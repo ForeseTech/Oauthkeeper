@@ -459,16 +459,18 @@ def is_admin(username):
 	cursor = conn.cursor()
 
 	sql_query = " SELECT USERNAME FROM USERS WHERE ADMIN&1=1; "
-
+	print(sql_query)
 	try:
 		cursor.execute(sql_query)
 		conn.close()
+
 	except Exception as e:
 		conn.close()
 		print(e)
 	
 	for USERNAME in cursor.fetchall():
 		if USERNAME[0] == username:
+			print(USERNAME)
 			return True
 	
 	return False
