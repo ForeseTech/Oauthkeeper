@@ -459,7 +459,7 @@ def is_admin(username):
 	cursor = conn.cursor()
 
 	sql_query = " SELECT USERNAME FROM USERS WHERE ADMIN&1=1; "
-	print(sql_query)
+
 	try:
 		cursor.execute(sql_query)
 		conn.close()
@@ -470,7 +470,13 @@ def is_admin(username):
 	
 	for USERNAME in cursor.fetchall():
 		if USERNAME[0] == username:
-			print(USERNAME)
 			return True
 	
 	return False
+
+def is_arjun(number):
+
+	if number == "8939227284":
+		return True
+	else:
+		return False

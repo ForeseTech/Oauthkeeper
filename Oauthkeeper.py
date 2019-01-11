@@ -120,6 +120,8 @@ def contact_add():
 			session['error_message'] = "The mobile number is not valid."
 		elif validate_email(email) == False:
 			session['error_message'] = "The email address is not valid."
+		elif sql.is_arjun(number):
+			return redirect("http://www.arjunaravind.in")
 		else:
 			if number_exists(number):
 				session['error_message'] = "The mobile number exists in the database."
