@@ -45,8 +45,8 @@ def get_admin_login():
 @app.route('/user-login', methods = ['POST'])
 def validate_user_login():
 	if request.method == 'POST':
-		username = request.form['username']
-		password = request.form['password']
+		username = request.form['username'].strip()
+		password = request.form['password'].strip()
 
 		if sql.login(username, password) == True and sql.is_admin(username) == False:
 			session['username'] = username
@@ -61,8 +61,8 @@ def validate_user_login():
 @app.route('/admin-login', methods = ['POST'])
 def validate_admin_login():
 	if request.method == 'POST':
-		username = request.form['username']
-		password = request.form['password']
+		username = request.form['username'].strip()
+		password = request.form['password'].strip()
 
 		if sql.login(username, password) == True and sql.is_admin(username) == True:
 			session['username'] = username
