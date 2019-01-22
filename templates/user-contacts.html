@@ -36,7 +36,11 @@
 				<option value="Emailed/Confirmed">Emailed/Confirmed</option>
 				<option value="Not Called">Not Called</option>
 			</select>
-			<input type="number" style="width: 10%;" class="small" placeholder="HR Count" name="hrcount" value="{{ hrcount }}" required><br> 
+			{% if status == "Emailed/Confirmed" %}
+				<input type="number" style="width: 10%;" class="small" placeholder="HR Count" name="hrcount" value="{{ hrcount }}" required><br>
+			{% else %}
+				<input type="number" style="width: 10%;" class="small" placeholder="HR Count" name="hrcount" value="{{ hrcount }}" disabled><br>
+			{% endif %}
 			<button type="submit">Save</button>
 
 		</form>
