@@ -366,7 +366,7 @@ def get_statistics():
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " SELECT STATUS, COUNT(*) AS STATS FROM CONTACTS GROUP BY STATUS ORDER BY STATUS ASC; "
+	sql_query = " SELECT STATUS, SUM(HRCOUNT) AS STATS FROM CONTACTS GROUP BY STATUS ORDER BY STATUS ASC; "
 
 	try:
 		cursor.execute(sql_query);
