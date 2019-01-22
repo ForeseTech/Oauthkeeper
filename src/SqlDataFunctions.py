@@ -30,7 +30,7 @@ def contacts_insert( name, company, mobile, email, address, current_user ):
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " INSERT INTO CONTACTS VALUES ( USERID, \"{NAME}\", \"{COMPANY}\", \"{MOBILE}\", \"{EMAIL}\", \"{ADDRESS}\", STATUS, \"{CURRENTUSER}\" ); ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address, CURRENTUSER=current_user )
+	sql_query = " INSERT INTO CONTACTS VALUES ( USERID, \"{NAME}\", \"{COMPANY}\", \"{MOBILE}\", \"{EMAIL}\", \"{ADDRESS}\", NOTES, STATUS, HRCOUNT,  \"{CURRENTUSER}\" ); ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address, CURRENTUSER=current_user )
 
 	try:
 		cursor.execute(sql_query)
@@ -50,12 +50,12 @@ def contacts_insert( name, company, mobile, email, address, current_user ):
 
 
 # Function which updates data in the CONTACTS table.
-def update_contacts( userid, name, company, mobile, email, address, status ):
+def update_contacts( userid, name, company, mobile, email, address, status, hrcount ):
 
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " UPDATE CONTACTS SET NAME=\"{NAME}\", COMPANY=\"{COMPANY}\", MOBILE=\"{MOBILE}\", EMAIL=\"{EMAIL}\", ADDRESS=\"{ADDRESS}\", STATUS=\"{STATUS}\" WHERE USERID={USERID}; ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address, STATUS=status, USERID=userid )
+	sql_query = " UPDATE CONTACTS SET NAME=\"{NAME}\", COMPANY=\"{COMPANY}\", MOBILE=\"{MOBILE}\", EMAIL=\"{EMAIL}\", ADDRESS=\"{ADDRESS}\", STATUS=\"{STATUS}\", HRCOUNT=\"{HRCOUNT}\" WHERE USERID={USERID}; ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address, STATUS=status, HRCOUNT=hrcount, USERID=userid )
 	
 	try:
 		cursor.execute(sql_query)
@@ -146,7 +146,7 @@ def get_contacts(username):
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " SELECT USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS FROM CONTACTS WHERE PERMISSIONS LIKE \"%{USER}%\";  ".format(USER=username)
+	sql_query = " SELECT USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, HRCOUNT FROM CONTACTS WHERE PERMISSIONS LIKE \"%{USER}%\";  ".format(USER=username)
 
 	try:
 		cursor.execute(sql_query)
@@ -162,8 +162,9 @@ def get_contacts(username):
 	emails = []
 	addresses = []
 	statuses = []
+	hrcounts = []
 
-	for USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS in cursor.fetchall():
+	for USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, HRCOUNT in cursor.fetchall():
 		ids.append(USERID)
 		names.append(NAME)
 		companies.append(COMPANY)
@@ -171,8 +172,9 @@ def get_contacts(username):
 		emails.append(EMAIL)
 		addresses.append(ADDRESS)
 		statuses.append(STATUS)
+		hrcounts.append(HRCOUNT)
 	
-	return zip(ids, names, companies, mobiles, emails, addresses, statuses)
+	return zip(ids, names, companies, mobiles, emails, addresses, statuses, hrcounts)
 
 # Function which gets all contact data.
 def get_all_contacts( username=None, status=None, number=None, company=None ):

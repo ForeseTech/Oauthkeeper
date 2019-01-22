@@ -11,6 +11,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for, ses
 
 app = Flask(__name__)
 app.secret_key = "8d%/?234s*&19aw}ws{"
+app.config["CACHE_TYPE"] = "null"
 
 ##################
 # LOGIN & LOGOUT #
@@ -181,6 +182,7 @@ def update_contact(userid):
 		email = form.escape_special_characters(request.form['email'])
 		address = form.escape_special_characters(request.form['address'])
 		status = form.escape_special_characters(request.form['status'])
+		hrcount = form.escape_special_characters(request.form['hrcount'])
 
 		if is_empty(name):
 			session['error_message'] = "The name is empty."
@@ -205,7 +207,7 @@ def update_contact(userid):
 			if 'error_message' not in session:
 				logger.update_contact( session['username'], name, company )
 
-			sql.update_contacts( userid, name, company, number, email, address, status )
+			sql.update_contacts( userid, name, company, number, email, address, status, hrcount )
 			return redirect( url_for('user_contacts', username=session['username']) )
 
 		if 'error_message' not in session:

@@ -13,17 +13,17 @@
 		<a href="{{ url_for('add_contact') }}">Add Contact</a>
 		<a href="{{ url_for('logout') }}" style="padding-top:.5%">Logout</a>
 
-		{% for contactid, name, company, number, email, address, status in records %}
+		{% for contactid, name, company, number, email, address, status, hrcount in records %}
 
 		<form method="post" action="{{ url_for('update_contact', userid=contactid) }}">
 
-			<input type="text" placeholder="HR's Name" name="name" value="{{ name }}">
-			<input type="text" placeholder="HR's Company" name="company" value="{{ company }}"><br>
+			<input type="text" placeholder="HR's Name" name="name" value="{{ name }}" required>
+			<input type="text" placeholder="HR's Company" name="company" value="{{ company }}" required><br>
 
-			<input type="number" placeholder="HR's Number" name="number" value="{{ number }}">
+			<input type="number" placeholder="HR's Number" name="number" value="{{ number }}" required>
 			<input type="email" placeholder="HR's Email" name="email" value="{{ email }}"><br>
 
-			<textarea type="address" placeholder="HR's Address" name="address"> {{ address }}  </textarea><br>
+			<textarea type="address" placeholder="HR's Address" name="address">{{ address }}</textarea><br>
 			<select name="status">
 				<option value="{{ status }}" selected>{{ status }}</option>
 				<option value="Wrong Number">Wrong Number</option>
@@ -35,7 +35,8 @@
 				<option value="Emailed/Declined">Emailed/Declined</option>
 				<option value="Emailed/Confirmed">Emailed/Confirmed</option>
 				<option value="Not Called">Not Called</option>
-			</select><br>
+			</select>
+			<input type="number" style="width: 10%;" class="small" placeholder="HR Count" name="hrcount" value="{{ hrcount }}" required><br> 
 			<button type="submit">Save</button>
 
 		</form>

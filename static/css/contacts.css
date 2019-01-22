@@ -50,6 +50,11 @@ input {
 	width: 0%;
 }
 
+.small {
+	width: 10%;
+	text-align: center;
+}
+
 textarea {
 	display: inline-block;
 	width: 63%;
