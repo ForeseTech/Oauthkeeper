@@ -21,9 +21,13 @@ This software has the following features:-
 For the students who are calling the HRs,
 
 * Students who are calling HRs will be given an account. Their username will be provided and the students must decide their own passwords.
+![alt text](https://raw.githubusercontent.com/ForeseTech/Oauthkeeper/master/static/img/github-screenshots/login.png)
 * Each student, once logged in, can only view contacts that have been assigned to them.
+![alt text](https://raw.githubusercontent.com/ForeseTech/Oauthkeeper/master/static/img/github-screenshots/contacts.png)
 * They have the option of adding contacts, provided the mobile number of the HR contact does not already exist in the database. This is taken care of by the solution.
+![alt text](https://raw.githubusercontent.com/ForeseTech/Oauthkeeper/master/static/img/github-screenshots/addcontact.png)
 * Students can also update information of contacts that are visible to them such as name, companu, number, email, address and, most importantly, status.
+
 
 For the EDs who are managing these students,
 
