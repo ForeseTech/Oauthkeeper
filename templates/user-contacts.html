@@ -39,7 +39,8 @@
 			{% if status == "Emailed/Confirmed" %}
 				<input type="number" style="width: 10%;" class="small" placeholder="HR Count" name="hrcount" value="{{ hrcount }}" required><br>
 			{% else %}
-				<input type="number" style="width: 10%;" class="small" placeholder="HR Count" name="hrcount" value="{{ hrcount }}" disabled><br>
+				<input type="hidden" name="hrcount" value="1">
+				<input type="number" style="width: 10%;" class="small" placeholder="HR Count" name="hrcount_disabled" value="1" disabled><br>
 			{% endif %}
 			<button type="submit">Save</button>
 
