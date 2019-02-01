@@ -1,6 +1,6 @@
 import sys
 sys.path.insert(0, '/root/Oauthkeeper/src')
-sys.path.insert(0, '/root/Oauthkeeper/utilities/Logger')
+sys.path.insert(0, '/root/Oauthkeeper/utilities/logger')
 
 import SqlDataFunctions as sql
 import Formatting as form
