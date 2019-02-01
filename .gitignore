@@ -3,7 +3,7 @@ forese
 *.pyc
 *.ini
 *.sock
-newdb.csv
+*.csv
 sqldump.txt
 OauthkeeperLogs.txt
 wsgi.py
