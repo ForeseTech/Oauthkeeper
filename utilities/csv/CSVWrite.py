@@ -4,9 +4,9 @@ sys.path.insert(0, "/root/Oauthkeeper/src")
 
 from SqlConnections import connection
 
-def get_all_contacts( username=None, status=None, number=None, company=None ):
+def generate_contacts_csv( username=None, status=None, number=None, company=None ):
 	
-	sql_query = " SELECT USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, PERMISSIONS, HRCOUNT FROM CONTACTS "
+	sql_query = " SELECT * FROM CONTACTS "
 	is_none = 0
 
 	# When there are username filters
@@ -50,6 +50,8 @@ def get_all_contacts( username=None, status=None, number=None, company=None ):
 
 	# We add the final semicolon.
 	sql_query += ";"
+
+	#We now execute the query in thr SQL server.
 	conn = connection()
 	cursor = conn.cursor()
 
@@ -62,10 +64,14 @@ def get_all_contacts( username=None, status=None, number=None, company=None ):
 		print(e)
 
 	#We write to the CSV file here.
-	f = open("demofile.txt", "w")
+	f = open("database-contacts.csv", "w")
+	f.write("HR Name,Company,Mobile,Email,Address,Status,Second-Year In-Charge,ED In-Charge,HR Count\n");
 
+	#All the results are written to the file here.
 	for USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, PERMISSIONS, HRCOUNT in cursor.fetchall():
-		str = "{NAME},{COMPANY},{MOBILE},{EMAIL},{HRCOUNT}\n".format(NAME=NAME.strip(), COMPANY=COMPANY.strip(), MOBILE=MOBILE.strip(), EMAIL=EMAIL.strip(), HRCOUNT=HRCOUNT)
+		
+		str = "{NAME},{COMPANY},{MOBILE},{EMAIL},{ADDRESS},{STATUS},{PERMISSIONS},{HRCOUNT}\n".format( NAME=NAME, COMPANY=COMPANY, MOBILE=MOBILE, EMAIL=EMAIL, ADDRESS=ADDRESS, STATUS=STATUS, PERMISSIONS=PERMISSIONS, HRCOUNT=HRCOUNT )
+
 		f.write(str)
 
-get_all_contacts(status="Emailed/Confirmed")
+generate_contacts_csv()

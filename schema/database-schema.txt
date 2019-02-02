@@ -19,7 +19,6 @@ CREATE TABLE CONTACTS (
 	MOBILE VARCHAR(80) NOT NULL UNIQUE,
 	EMAIL VARCHAR(80),
 	ADDRESS VARCHAR(2000),
-	NOTES VARCHAR(500),
 	STATUS ENUM ("Not Called", "Wrong Number", "Called/Declined", "Called/Not Reachable",  "Called/Postponed", "Called/Accepted", "Emailed/Awaiting Response", "Emailed/Declined", "Emailed/Confirmed") DEFAULT "Not Called",
 	HRCOUNT INT(3) NOT NULL DEFAULT 1;
 	PERMISSIONS VARCHAR(200) NOT NULL

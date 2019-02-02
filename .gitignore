@@ -5,7 +5,7 @@ txtfiles
 *.ini
 *.sock
 *.csv
-sqldump.txt
+sqldump*
 OauthkeeperLogs.txt
 wsgi.py
 SqlConnections.py
