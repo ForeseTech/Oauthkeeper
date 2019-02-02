@@ -107,11 +107,11 @@ def add_contact():
 @app.route('/add-contact', methods = ['POST'])
 def contact_add():
 	if request.method == 'POST':
-		name = form.escape_special_characters(request.form['name'])
-		company = form.escape_special_characters(request.form['company'])
-		number = form.escape_special_characters(request.form['number'])
-		email = form.escape_special_characters(request.form['email'])
-		address = form.escape_special_characters(request.form['address'])
+		name = form.escape_special_characters(request.form['name']).strip()
+		company = form.escape_special_characters(request.form['company']).strip()
+		number = form.escape_special_characters(request.form['number']).strip()
+		email = form.escape_special_characters(request.form['email']).strip()
+		address = form.escape_special_characters(request.form['address']).strip()
 
 		if is_empty(name):
 			session['error_message'] = "The 'name' field is required."
@@ -176,13 +176,13 @@ def user_contacts(username):
 @app.route('/update-contacts/<int:userid>', methods = ['POST'])
 def update_contact(userid):
 	if request.method == 'POST':
-		name = form.escape_special_characters(request.form['name'])
-		company = form.escape_special_characters(request.form['company'])
-		number = form.escape_special_characters(request.form['number'])
-		email = form.escape_special_characters(request.form['email'])
-		address = form.escape_special_characters(request.form['address'])
-		status = form.escape_special_characters(request.form['status'])
-		hrcount = form.escape_special_characters(request.form['hrcount'])
+		name = form.escape_special_characters(request.form['name']).strip()
+		company = form.escape_special_characters(request.form['company']).strip()
+		number = form.escape_special_characters(request.form['number']).strip()
+		email = form.escape_special_characters(request.form['email']).strip()
+		address = form.escape_special_characters(request.form['address']).strip()
+		status = form.escape_special_characters(request.form['status']).strip()
+		hrcount = form.escape_special_characters(request.form['hrcount']).strip()
 
 		if is_empty(name):
 			session['error_message'] = "The name is empty."
@@ -245,7 +245,7 @@ def get_permissions():
 @app.route('/admin/edit-permissions/<userid>', methods = ['POST'])
 def edit_permissions(userid):
 	if request.method == 'POST':
-		permissions = request.form['permissions']
+		permissions = request.form['permissions'].strip()
 
 		sql.update_permissions(userid, permissions)
 		logger.edited_permissions( session['username'], userid, permissions )
