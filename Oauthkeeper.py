@@ -323,10 +323,15 @@ def filter_team_statistics():
 def get_excelify():
 	return render_template( 'admin-excelify.html' )
 
-@app.route('/admin/excelify/all.csv')
+@app.route('/admin/excelify/all-contacts.csv')
 def get_all_contacts_csv():
 	csv.generate_contacts()
-	return send_file('/root/Oauthkeeper/static/css/database-contacts.csv', attachment_filename='database-contacts.csv')
+	return send_file('/root/Oauthkeeper/static/csv/database-contacts.csv', attachment_filename='database-contacts.csv')
+
+@app.route('/admin/excelify/confirmed-contacts.csv')
+def get_confirmed_contacts_csv():
+	csv.generate_contacts(status='Emailed/Confirmed')
+	return send_file('/root/Oauthkeeper/static/csv/database-contacts.csv', attachment_filename='database-contacts.csv')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

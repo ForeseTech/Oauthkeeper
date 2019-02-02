@@ -49,8 +49,8 @@ def generate_contacts( username=None, status=None, number=None, company=None ):
 
 		sql_query += "COMPANY LIKE \"%{COMPANY}%\" ".format(COMPANY=company)
 
-	# We add the final semicolon.
-	sql_query += ";"
+	# We add the final ordering and semicolon.
+	sql_query += "ORDER BY PERMISSIONS;"
 
 	#We now execute the query in thr SQL server.
 	conn = connection()
@@ -66,11 +66,11 @@ def generate_contacts( username=None, status=None, number=None, company=None ):
 
 	#We write to the CSV file here.
 	f = open("/root/Oauthkeeper/static/csv/database-contacts.csv", "w")
-	f.write("HR Name,Company,Mobile,Email,Address,Status,Second-Year In-Charge,ED In-Charge,HR Count\n");
+	f.write("HR Name,Company,Mobile,Email,Address,Status,HR Count, Second-Year\n");
 
 	#All the results are written to the file here.
 	for USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, PERMISSIONS, HRCOUNT in cursor.fetchall():
 		
-		str = "\"{NAME}\",\"{COMPANY}\",\"{MOBILE}\",\"{EMAIL}\",\"{ADDRESS}\",\"{STATUS}\",\"{PERMISSIONS}\",\"{HRCOUNT}\"\n".format( NAME=NAME, COMPANY=COMPANY, MOBILE=MOBILE, EMAIL=EMAIL, ADDRESS=ADDRESS, STATUS=STATUS, PERMISSIONS=PERMISSIONS, HRCOUNT=HRCOUNT )
+		str = "\"{NAME}\",\"{COMPANY}\",{MOBILE},{EMAIL},\"{ADDRESS}\",{STATUS},\"{PERMISSIONS}\",{HRCOUNT}\n".format( NAME=NAME, COMPANY=COMPANY, MOBILE=MOBILE, EMAIL=EMAIL, ADDRESS=ADDRESS, STATUS=STATUS, PERMISSIONS=PERMISSIONS, HRCOUNT=HRCOUNT )
 
 		f.write(str)
