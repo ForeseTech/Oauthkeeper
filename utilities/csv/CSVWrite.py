@@ -4,7 +4,8 @@ sys.path.insert(0, "/root/Oauthkeeper/src")
 
 from SqlConnections import connection
 
-def generate_contacts_csv( username=None, status=None, number=None, company=None ):
+# Generates a CSV file of all contacts.
+def generate_contacts( username=None, status=None, number=None, company=None ):
 	
 	sql_query = " SELECT * FROM CONTACTS "
 	is_none = 0
@@ -64,14 +65,12 @@ def generate_contacts_csv( username=None, status=None, number=None, company=None
 		print(e)
 
 	#We write to the CSV file here.
-	f = open("database-contacts.csv", "w")
+	f = open("/root/Oauthkeeper/static/csv/database-contacts.csv", "w")
 	f.write("HR Name,Company,Mobile,Email,Address,Status,Second-Year In-Charge,ED In-Charge,HR Count\n");
 
 	#All the results are written to the file here.
 	for USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, PERMISSIONS, HRCOUNT in cursor.fetchall():
 		
-		str = "{NAME},{COMPANY},{MOBILE},{EMAIL},{ADDRESS},{STATUS},{PERMISSIONS},{HRCOUNT}\n".format( NAME=NAME, COMPANY=COMPANY, MOBILE=MOBILE, EMAIL=EMAIL, ADDRESS=ADDRESS, STATUS=STATUS, PERMISSIONS=PERMISSIONS, HRCOUNT=HRCOUNT )
+		str = "\"{NAME}\",\"{COMPANY}\",\"{MOBILE}\",\"{EMAIL}\",\"{ADDRESS}\",\"{STATUS}\",\"{PERMISSIONS}\",\"{HRCOUNT}\"\n".format( NAME=NAME, COMPANY=COMPANY, MOBILE=MOBILE, EMAIL=EMAIL, ADDRESS=ADDRESS, STATUS=STATUS, PERMISSIONS=PERMISSIONS, HRCOUNT=HRCOUNT )
 
 		f.write(str)
-
-generate_contacts_csv()

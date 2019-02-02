@@ -1,13 +1,15 @@
 import sys
 sys.path.insert(0, '/root/Oauthkeeper/src')
-sys.path.insert(0, '/root/Oauthkeeper/utilities/logger')
+sys.path.insert(1, '/root/Oauthkeeper/utilities/logger')
+sys.path.insert(2, '/root/Oauthkeeper/utilities/csv')
 
 import SqlDataFunctions as sql
 import Formatting as form
 import Logger as logger
+import CSVWrite as csv
 
 from Validation import number_exists, email_exists, is_empty, validate_number, validate_email
-from flask import Flask, render_template, request, flash, redirect, url_for, session
+from flask import Flask, render_template, request, flash, redirect, url_for, session, send_file
 
 app = Flask(__name__)
 app.secret_key = "8d%/?234s*&19aw}ws{"
@@ -308,6 +310,23 @@ def filter_team_statistics():
 		status = request.form['status']
 
 		return render_template( 'admin-teams.html', records = sql.get_all_team_contacts(ed = ed, status = status))
+
+
+############
+# EXCELIFY #
+############
+
+
+# Function which gets the excelify page.
+@app.route('/admin/excelify/')
+@app.route('/admin/excelify')
+def get_excelify():
+	return render_template( 'admin-excelify.html' )
+
+@app.route('/admin/excelify/all.csv')
+def get_all_contacts_csv():
+	csv.generate_contacts()
+	return send_file('/root/Oauthkeeper/static/css/database-contacts.csv', attachment_filename='database-contacts.csv')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
