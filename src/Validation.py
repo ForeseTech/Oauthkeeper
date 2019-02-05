@@ -35,6 +35,17 @@ def validate_email( email ):
 	else:
 		return False
 
+def validate_department( department ):
+	if department == "CSE" or department == "IT":
+		return True
+	elif department == "EEE" or department == "ECE":
+		return True
+	elif department == "MEC" or department == "AUT":
+		return True
+	elif department == "CIV" or department == "BIO":
+		return True
+	elif department == "CHE":
+
 ###################
 # EXISTS FUNCTION #
 ###################

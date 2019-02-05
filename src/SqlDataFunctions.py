@@ -30,7 +30,7 @@ def contacts_insert( name, company, mobile, email, address, current_user ):
 	conn = connection()
 	cursor = conn.cursor()
 
-	sql_query = " INSERT INTO CONTACTS VALUES ( USERID, \"{NAME}\", \"{COMPANY}\", \"{MOBILE}\", \"{EMAIL}\", \"{ADDRESS}\", NOTES, STATUS, HRCOUNT,  \"{CURRENTUSER}\" ); ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address, CURRENTUSER=current_user )
+	sql_query = " INSERT INTO CONTACTS VALUES ( USERID, \"{NAME}\", \"{COMPANY}\", \"{MOBILE}\", \"{EMAIL}\", \"{ADDRESS}\", STATUS, HRCOUNT,  \"{CURRENTUSER}\" ); ".format( NAME=name, COMPANY=company, MOBILE=mobile, EMAIL=email, ADDRESS=address, CURRENTUSER=current_user )
 
 	try:
 		cursor.execute(sql_query)
