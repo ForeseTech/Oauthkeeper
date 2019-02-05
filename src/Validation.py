@@ -45,6 +45,9 @@ def validate_department( department ):
 	elif department == "CIV" or department == "BIO":
 		return True
 	elif department == "CHE":
+		return True
+	else:
+		return False
 
 ###################
 # EXISTS FUNCTION #
