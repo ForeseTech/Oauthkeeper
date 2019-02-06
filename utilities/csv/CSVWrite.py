@@ -1,8 +1,7 @@
-import csv
 import sys
 sys.path.insert(0, "/root/Oauthkeeper/src")
 
-from SqlConnections import connection
+from SqlConnections import connection, results_connection
 
 # Generates a CSV file of all contacts.
 def generate_contacts( username=None, status=None, number=None, company=None ):
@@ -72,5 +71,34 @@ def generate_contacts( username=None, status=None, number=None, company=None ):
 	for USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, PERMISSIONS, HRCOUNT in cursor.fetchall():
 		
 		str = "\"{NAME}\",\"{COMPANY}\",{MOBILE},{EMAIL},\"{ADDRESS}\",{STATUS},\"{PERMISSIONS}\",{HRCOUNT}\n".format( NAME=NAME, COMPANY=COMPANY, MOBILE=MOBILE, EMAIL=EMAIL, ADDRESS=ADDRESS, STATUS=STATUS, PERMISSIONS=PERMISSIONS, HRCOUNT=HRCOUNT )
+
+		f.write(str)
+	
+
+# A function to generate a CSV file for results ordered according to department, and then, scores.
+def generate_ordered_results():
+	
+	sql_query = " SELECT RESULTS.REGNUMBER AS REGNUMBER, USERS.NAME AS NAME, USERS.DEPARTMENT AS DEPARTMENT FROM USERS, RESULTS WHERE RESULTS.REGNUMBER=USERS.REGNUMBER ORDER BY DEPARTMENT, TOTAL DESC; "
+
+	#We now execute the query in thr SQL server.
+	conn = results_connection()
+	cursor = conn.cursor()
+
+	try:
+		cursor.execute(sql_query)
+		conn.close()
+	
+	except Exception as e:
+		conn.close()
+		print(e)
+
+	#We write to the CSV file here.
+	f = open("/root/Oauthkeeper/static/csv/results.csv", "w")
+	f.write("\"Registration Number\",Name,Department\n");
+
+	#All the results are written to the file here.
+	for REGNUMBER, NAME, DEPARTMENT in cursor.fetchall():
+		
+		str = "\"{REGNUMBER}\",\"{NAME}\",{DEPARTMENT}\n".format( REGNUMBER=REGNUMBER, NAME=NAME, DEPARTMENT=DEPARTMENT )
 
 		f.write(str)
