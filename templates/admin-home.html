@@ -6,17 +6,16 @@
 		<link rel="icon" href="../static/img/sword.png">
 	</head>
 
-	<body>
-
-	<!-- We need permission editing, search, stats, users  -->		
+	<body class="align-center">
 
 		<h1>Welcome, {{ username }}!</h1>
 
 		<a href="{{ url_for('get_permissions') }}" class="home-tags">HR Contact Permissions</a>
-		<a href="{{ url_for('get_search') }}" class="home-tags">Search Contacts</a>
+		<a href="{{ url_for('get_search') }}" class="home-tags">Search Contacts</a><br>
 		<a href="{{ url_for('get_stats') }}" class="home-tags">HR Statistics</a>
-		<a href="{{ url_for('get_team_statistics') }}" class="home-tags">Team Statistics</a>
+		<a href="{{ url_for('get_team_statistics') }}" class="home-tags">Team Statistics</a><br>
 		<a href="{{ url_for('get_excelify') }}" class="home-tags">Excelify</a>
+		<a href="{{ url_for('get_excelify') }}" class="home-tags">Manage Users</a><br>
 		<a href="{{ url_for('admin_logout') }}" class="home-tags">Logout</a>
 
 	</body>
