@@ -179,7 +179,7 @@ def get_contacts(username):
 # Function which gets all contact data.
 def get_all_contacts( username=None, status=None, number=None, company=None ):
 	
-	sql_query = " SELECT USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, PERMISSIONS FROM CONTACTS "
+	sql_query = " SELECT USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, PERMISSIONS, HRCOUNT FROM CONTACTS "
 	is_none = 0
 
 	# When there are username filters
@@ -223,6 +223,7 @@ def get_all_contacts( username=None, status=None, number=None, company=None ):
 
 	# We add the final semicolon.
 	sql_query += ";"
+	
 	conn = connection()
 	cursor = conn.cursor()
 
@@ -242,8 +243,9 @@ def get_all_contacts( username=None, status=None, number=None, company=None ):
 	addresses = []
 	statuses = []
 	permissions = []
+	hrcounts = []
 
-	for USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, PERMISSIONS in cursor.fetchall():
+	for USERID, NAME, COMPANY, MOBILE, EMAIL, ADDRESS, STATUS, PERMISSIONS, HRCOUNT in cursor.fetchall():
 		ids.append(USERID)
 		names.append(NAME)
 		companies.append(COMPANY)
@@ -252,8 +254,9 @@ def get_all_contacts( username=None, status=None, number=None, company=None ):
 		addresses.append(ADDRESS)
 		statuses.append(STATUS)
 		permissions.append(PERMISSIONS)
+		hrcounts.append(HRCOUNT)
 	
-	return zip(ids, names, companies, numbers, emails, addresses, statuses, permissions)
+	return zip(ids, names, companies, numbers, emails, addresses, statuses, permissions, hrcounts)
 
 # Function which gets mobile number based on the contactid.
 def get_mobile_number(userid):
@@ -428,12 +431,13 @@ def get_all_team_contacts(ed, status=None):
 	addresses = []
 	statuses = []
 	permissions = []
+	hrcounts = []
 	
 	for member in members:
 		
 		records = get_all_contacts(member, status)
 
-		for userid, name, company, number, email, address, this_status, permission in records:
+		for userid, name, company, number, email, address, this_status, permission, hrcount in records:
 			ids.append(userid)
 			names.append(name)
 			companies.append(company)
@@ -442,12 +446,10 @@ def get_all_team_contacts(ed, status=None):
 			addresses.append(address)
 			statuses.append(this_status)
 			permissions.append(permission)
+			hrcounts.append(hrcount)
 
-	return zip(ids, names, companies, numbers, emails, addresses, statuses, permissions)
+	return zip(ids, names, companies, numbers, emails, addresses, statuses, permissions, hrcounts)
 				
-
-# Function which gets the members of 
-
 
 ######################
 # CHECKING FUNCTIONS #

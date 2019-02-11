@@ -174,3 +174,30 @@ select {
 
 	font-size: 110%;
 }
+
+
+/****************************/
+/* CSS for the ADDRESS page */
+/****************************/
+
+.no-border {
+	border: none;
+}
+
+.address {
+	display: block;
+	width: 88%;
+
+	margin: 2% 4.9%;
+	padding: 1%;
+	border: 2px solid black;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+	background-color: #EEE;
+	color: black;
+
+}
+
+.address p {
+	border: none;
+}

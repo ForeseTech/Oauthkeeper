@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 	<head>
-		<title>Search | Oauthkeeper</title>
+		<title>Addresses | Oauthkeeper</title>
 		<link href="../static/css/permissions.css" rel="stylesheet">
 		<link rel="icon" href="../static/img/sword.png">
 	</head>
@@ -9,10 +9,10 @@
 	<body>
 
 		<!-- The HTML for the HEADER.  -->
-		<h1>Search</h1>
+		<h1>Addresses</h1>
 
-		<!-- The HTML for the SEARCH.  -->
-		<form class="search-form" method="post" action="{{ url_for('search') }}">
+		<!-- The HTML for the ADDRESS SEARCH.  -->
+		<form class="search-form" method="post" action="{{ url_for('filter_addresses') }}">
 			
 			<h3>Filtering Options</h3>
 
@@ -47,20 +47,19 @@
 			<input type="text" name="company" class="search-input" style="width: 28.5%; font-size: 90%;" placeholder="Company Name"><br><br>
 
 			<!-- Submit Button. -->
-			<button type="submit">Search!</button>
+			<button type="submit">Filter!</button>
 		</form>
 
-		<div class="list list-div">
+		<div class="list list-div no-border">
 
 			{% for userid, name, company, mobile, email, address, status, permissions, hrcount in records %}
-			<div class="record listing">
-				<p>{{ name }}</p>
-				<p>{{ company }}</p>
-				<p style="width: 7.5%;">{{ mobile }}</p>
-				<p style="width: 20%;">{{ email }}</p>
-				<p>{{ status }}</p>
-				<p style="width: 13%;">{{ permissions }}</p>
+
+			<div class="address">
+				<p><strong>Name:</strong> {{ name }}</p>
+				<p><strong>Company:</strong> {{ company }}, {{ hrcount }} HR(s) coming</p>
+				<p><strong>Address:</strong> {{ address }}</p>
 			</div>
+
 			{% endfor %}
 		
 		</div>

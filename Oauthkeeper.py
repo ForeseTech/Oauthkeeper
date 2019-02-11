@@ -333,5 +333,30 @@ def get_confirmed_contacts_csv():
 	csv.generate_contacts(status='Emailed/Confirmed')
 	return send_file('/root/Oauthkeeper/static/csv/database-contacts.csv', attachment_filename='database-contacts.csv')
 
+
+#############
+# ADDRESSES #
+#############
+
+# Function which gets the address page.
+@app.route('/admin/addresses/')
+@app.route('/admin/addresses')
+def get_addresses():
+	return render_template( 'admin-address.html', usernames = sql.get_usernames(), records = sql.get_all_contacts() )
+
+# Function which filters addresses based on the given form input.
+@app.route('/admin/filter-addresses', methods = ['POST'])
+def filter_addresses():
+	if request.method == 'POST':
+
+		username = request.form['username']
+		status = request.form['status']
+		number = request.form['number']
+		company = request.form['company']
+
+		this_usernames = sql.get_usernames()
+		this_records = sql.get_all_contacts( username, status, number, company )
+		return render_template( 'admin-address.html', usernames = this_usernames, records = this_records )
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
