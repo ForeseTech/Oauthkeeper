@@ -1,5 +1,5 @@
 # Oauthkeeper
-A simple, but functional, web application to **manage** HR contacts. Only lets **authorised** users to view certain contacts.
+A simple, but functional, web application to **manage** HR contacts. It only lets **authorised** users to view certain contacts.
 
 ## Why was Oauthkeeper built?
 
